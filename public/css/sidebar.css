@@ -1,0 +1,91 @@
+.sidebar {
+    padding: 24px 16px;
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+}
+.sidebar .heading {
+    margin: 18px 0 12px 0;
+}
+.sidebar .link.active {
+    color: #000;
+}
+.sidebar .link.active img {
+    filter: brightness(0) invert(1);
+}
+.sidebar .link {
+    color: #000;
+    margin-bottom: 8px;
+    padding: 10px 10px 10px 0;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 15px;
+}
+.sidebar .link:before {
+    position: relative;
+    content: "\f105";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 10px;
+}
+.sidebar .link:hover {
+    color: #000;
+}
+.sidebar .link img {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+.sidebar .link:hover img {
+    filter: brightness(0) invert(1);
+}
+.sidebar .link:last-child {
+    margin-bottom: 0;
+}
+
+/*overlay as sidebar open*/
+#sidenav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5555;
+    display: none;
+}
+
+/*when the body has the class nav-open, display the overlay*/
+.nav-open #sidenav-overlay {
+    display: block;
+}
+
+@media (min-width: 992px) {
+    .nav-open #sidenav-overlay {
+        display: none;
+    }
+}
+
+@media(max-width: 991px) {
+    .sidebar {
+        position: fixed;
+        left: 0;
+        background: var(--bs-primary);
+        width: 50%;
+        z-index: 5555;
+        height: 100%;
+        top: 0;
+        overflow: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.hidden {
+        transform: translateX(-505px);
+    }
+}
+@media(max-width: 575px) {
+    .sidebar {
+        width: 70%;
+    }
+}

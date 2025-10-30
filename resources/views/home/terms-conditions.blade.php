@@ -1,0 +1,33 @@
+@extends('home.layout.app')
+@section('title', 'Login')
+@section('content')
+    <section class="section">
+        <div class="container-xxl bg-white p-0">
+            <div class="container-xxl position-relative p-0">
+
+                <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                    <div class="container text-center my-lg-5 pt-lg-5 pb-lg-4">
+                        <h1 class="display-3 text-white mb-3 animated slideInDown">Terms & Conditions</h1>
+                    </div>
+                </div>
+            </div>
+            <!-- Terms & Conditions Start -->
+            <div class="px-lg-5 px-3 mx-auto mt-5 wow fadeIn" data-wow-delay="0.1s">
+                <div class="p-3 rounded light-box-shadow">
+                    <p>
+                        {!! $data->description ?? '' !!}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Terms & Conditions End -->
+        </div>
+    </section>
+@endsection
+@section('js')
+    @if (\Illuminate\Support\Facades\Session::has('message'))
+        <script>
+            toastr.success('{{ \Illuminate\Support\Facades\Session::get('message') }}');
+        </script>
+    @endif
+@endsection
