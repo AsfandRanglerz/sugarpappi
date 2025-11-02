@@ -131,9 +131,169 @@ class OrderController extends Controller
         return redirect()->back()->with(['status' => true, 'message' => 'Order Updated Successfully']);
     }
 
+    // public function order(Request $request)
+    // {
+    //     // return $request;
+    //     try {
+    //         $user = Auth::guard('user')->user();
+    //         $userId = $user->id;
+    //         $products = session('cart', []);
+    //         $vehicle_color = session('vehicle_color', []);
+    //         $vehicle_number = session('vehicle_number', []);
+    //         $redeemed = session('redeemed', []);
+    //         // return $redeemed;
+    //         $dateTime = session('time', []);
+    //         $startTime = session('start_time', []);
+    //         $tip_amount = session('tip_amount', []);
+    //         $orderTotal = session('orderTotal', []);
+
+    //         $total = 0;
+    //         foreach ($products as $id => $details) {
+    //             $branchId = $details['branch_id'];
+    //         }
+
+    //         $client = new SquareClient([
+    //             'accessToken' => $this->getAccessToken($branchId),
+    //             'environment' => Environment::SANDBOX
+    //         ]);
+    //         $paymentsApi = $client->getPaymentsApi();
+    //         $requestBody = new CreatePaymentRequest(
+    //             $request->sourceId,
+    //             $request->idempotencyKey
+    //         );
+    //         $amount_money = new Money();
+    //         // $amount_money->setAmount($orderTotal - $request->redeemed * 100);
+    //         if (isset($redeemed) && $redeemed <= $orderTotal) {
+    //             $amount_money->setAmount(max(0, $orderTotal - $redeemed) * 100);
+    //         } else {
+    //             $amount_money->setAmount($orderTotal * 100);
+    //         }
+    //         $amount_money->setCurrency('USD');
+    //         $requestBody->setAmountMoney($amount_money);
+    //         $response = $paymentsApi->createPayment($requestBody);
+    //         if ($response->isSuccess()) {
+    //             $order = new Order();
+    //             $order->code = random_int(10000000, 99999999);
+    //             $order->user_id = $userId;
+    //             $order->vehicle_color = $vehicle_color ? $vehicle_color : 'NULL';
+    //             $order->vehicle_number = $vehicle_number ?  $vehicle_number : 'NULL';
+    //             $order->redeemed = $redeemed ? $redeemed : 'NULL';
+    //             $order->status = 'Pending';
+    //             $order->payment = 'cash on delivery';
+    //             if (isset($dateTime['date'])) {
+    //                 $order->date = $dateTime['date'];
+    //             } else {
+    //                 $order->date = null;
+    //             }
+    //             if (isset($dateTime['time'])) {
+    //                 $order->time = $dateTime['time'];
+    //             } else {
+    //                 $order->time = $startTime;
+    //             }
+    //             foreach ($products as $id => $details) {
+    //                 $total += floatval($details['price']) * floatval($details['quantity']);
+    //             }
+    //             $branchId = $details['branch_id'];
+    //             $branch = Branch::find($branchId);
+    //             if ($branch && $branch->status == 1) {
+    //                 $tax = $branch->tax;
+    //             }
+    //             $order->total_amount = $total;
+    //             $order->save();
+
+    //             $orderId = $order->id;
+    //             // return  $orderId;
+    //             foreach ($products as $id => $details) {
+    //                 $orderItem = new OrderItem();
+    //                 $orderItem->order_id = $orderId;
+    //                 $orderItem->product_id = $details['product_id'];
+    //                 $orderItem->product_size = isset($details['size']) ? $details['size'] : 'NULL';
+    //                 $orderItem->product_price = $details['price'];
+    //                 $orderItem->branch_id = $details['branch_id'];
+    //                 $orderItem->product_name = $details['name'];
+    //                 $orderItem->quantity = $details['quantity'];
+    //                 if (isset($tip_amount) && is_scalar($tip_amount)) {
+    //                     $orderItem->tip = $tip_amount;
+    //                 } elseif (is_array($tip_amount)) {
+    //                     $orderItem->tip = array_sum($tip_amount);
+    //                 } else {
+    //                     $orderItem->tip = '0';
+    //                 }
+    //                 $orderItem->sub_total = floatval($details['price']) * floatval($details['quantity']);
+    //                 $orderItem->save();
+    //                 foreach ($details['toppings_by_category'] as $categoryId => $toppingIds) {
+    //                     // return $toppingIds;
+    //                     foreach ($toppingIds as $toppingId) {
+    //                         $orderItemTopping = new OrderItemToppings();
+    //                         $orderItemTopping->order_item_id = $orderItem->id;
+    //                         $orderItemTopping->topping_id = $toppingId;
+    //                         $orderItemTopping->category_id = $categoryId; // Save category ID
+    //                         $orderItemTopping->save();
+    //                         $topping = Topping::find($toppingId);
+    //                         if ($topping) {
+    //                             $total += $topping->price;
+    //                         }
+    //                     }
+    //                 }
+    //             };
+    //             $order->total_amount = $total + $tip_amount + $branch->tax;
+    //             $order->save();
+
+    //             //loyality points code start
+    //             $points = $order->total_amount;
+    //             if ($user) {
+
+    //                 // Retrieve the existing points of the user
+    //                 $existingPoints = $user->point;
+    //                 // Add the new points to the existing points
+    //                 $totalPoints = $existingPoints + $points;
+    //                 // Round down to the nearest integer
+    //                 $totalPoints = floor($totalPoints);
+    //                 // Update the user's points
+    //                 $user->update(['point' => $totalPoints]);
+    //             }
+
+    //             $reward = Reward::where('user_id', $user->id)->first();
+    //             $redeemedPoints = $redeemed ? $redeemed : '0';
+    //             if ($totalPoints >= 150) {
+    //                 $rewards = floor(($totalPoints / 150)) * 5;
+    //                 if ($reward) {
+    //                     $redeemedPoints += $reward->redeemed;
+    //                     $reward->update([
+    //                         'rewards' => $rewards,
+    //                         'redeemed' => $redeemedPoints,
+    //                     ]);
+    //                 } else {
+    //                     Reward::create([
+    //                         'user_id' => $user->id,
+    //                         'rewards' => $rewards,
+    //                         'redeemed' => 0,
+    //                     ]);
+    //                 }
+    //             }
+    //             //loyality points code end
+
+    //             $orderCode = $order->code;
+    //             Mail::to($user->email)->send(new OrderConfirm($orderCode));
+    //             Session::forget(['cart', 'time', 'start_time', 'tip_amount', 'vehicle_color', 'vehicle_number', 'redeemed']);
+    //             // return redirect()->route('my-order')->with(['status' => true, 'message' => 'Order Placed Successfully']);
+    //             return response()->json($response->getResult());
+    //         } else {
+    //             $errors = $response->getErrors();
+    //             foreach ($errors as $error) {
+    //                 if ($error->getCode() === 'PAN_FAILURE') {
+    //                     return response()->json(['error' => $error->getDetail()], 400);
+    //                 }
+    //             }
+    //             return response()->json(['error' => 'Payment failed. Please try again later.'], 400);
+    //         }
+    //     } catch (ApiException $e) {
+    //         $errorDetail = $e->getResponseBody()->errors[0]->detail;
+    //         return response()->json(['error' => $errorDetail], 400);
+    //     }
+    // }
     public function order(Request $request)
     {
-        // return $request;
         try {
             $user = Auth::guard('user')->user();
             $userId = $user->id;
@@ -141,7 +301,6 @@ class OrderController extends Controller
             $vehicle_color = session('vehicle_color', []);
             $vehicle_number = session('vehicle_number', []);
             $redeemed = session('redeemed', []);
-            // return $redeemed;
             $dateTime = session('time', []);
             $startTime = session('start_time', []);
             $tip_amount = session('tip_amount', []);
@@ -152,146 +311,109 @@ class OrderController extends Controller
                 $branchId = $details['branch_id'];
             }
 
-            $client = new SquareClient([
-                'accessToken' => $this->getAccessToken($branchId),
-                'environment' => Environment::SANDBOX
-            ]);
-            $paymentsApi = $client->getPaymentsApi();
-            $requestBody = new CreatePaymentRequest(
-                $request->sourceId,
-                $request->idempotencyKey
-            );
-            $amount_money = new Money();
-            // $amount_money->setAmount($orderTotal - $request->redeemed * 100);
-            if (isset($redeemed) && $redeemed <= $orderTotal) {
-                $amount_money->setAmount(max(0, $orderTotal - $redeemed) * 100);
-            } else {
-                $amount_money->setAmount($orderTotal * 100);
-            }
-            $amount_money->setCurrency('USD');
-            $requestBody->setAmountMoney($amount_money);
-            $response = $paymentsApi->createPayment($requestBody);
-            if ($response->isSuccess()) {
-                $order = new Order();
-                $order->code = random_int(10000000, 99999999);
-                $order->user_id = $userId;
-                $order->vehicle_color = $vehicle_color ? $vehicle_color : 'NULL';
-                $order->vehicle_number = $vehicle_number ?  $vehicle_number : 'NULL';
-                $order->redeemed = $redeemed ? $redeemed : 'NULL';
-                $order->status = 'Pending';
-                $order->payment = 'cash on delivery';
-                if (isset($dateTime['date'])) {
-                    $order->date = $dateTime['date'];
-                } else {
-                    $order->date = null;
-                }
-                if (isset($dateTime['time'])) {
-                    $order->time = $dateTime['time'];
-                } else {
-                    $order->time = $startTime;
-                }
-                foreach ($products as $id => $details) {
-                    $total += floatval($details['price']) * floatval($details['quantity']);
-                }
-                $branchId = $details['branch_id'];
-                $branch = Branch::find($branchId);
-                if ($branch && $branch->status == 1) {
-                    $tax = $branch->tax;
-                }
-                $order->total_amount = $total;
-                $order->save();
+            // ✅ CREATE ORDER WITHOUT PAYMENT GATEWAY
+            $order = new Order();
+            $order->code = random_int(10000000, 99999999);
+            $order->user_id = $userId;
+            $order->vehicle_color = $vehicle_color ?: 'NULL';
+            $order->vehicle_number = $vehicle_number ?: 'NULL';
+            $order->redeemed = $redeemed ?: 'NULL';
+            $order->status = 'Pending';
+            $order->payment = 'offline'; // ✅ manual payment
+            $order->date = $dateTime['date'] ?? null;
+            $order->time = $dateTime['time'] ?? $startTime;
 
-                $orderId = $order->id;
-                // return  $orderId;
-                foreach ($products as $id => $details) {
-                    $orderItem = new OrderItem();
-                    $orderItem->order_id = $orderId;
-                    $orderItem->product_id = $details['product_id'];
-                    $orderItem->product_size = isset($details['size']) ? $details['size'] : 'NULL';
-                    $orderItem->product_price = $details['price'];
-                    $orderItem->branch_id = $details['branch_id'];
-                    $orderItem->product_name = $details['name'];
-                    $orderItem->quantity = $details['quantity'];
-                    if (isset($tip_amount) && is_scalar($tip_amount)) {
-                        $orderItem->tip = $tip_amount;
-                    } elseif (is_array($tip_amount)) {
-                        $orderItem->tip = array_sum($tip_amount);
-                    } else {
-                        $orderItem->tip = '0';
-                    }
-                    $orderItem->sub_total = floatval($details['price']) * floatval($details['quantity']);
-                    $orderItem->save();
+            foreach ($products as $id => $details) {
+                $total += floatval($details['price']) * floatval($details['quantity']);
+            }
+
+            $branch = Branch::find($branchId);
+            $tax = $branch && $branch->status == 1 ? $branch->tax : 0;
+            $order->total_amount = $total;
+            $order->save();
+
+            $orderId = $order->id;
+
+            // ✅ Save order items and toppings
+            foreach ($products as $id => $details) {
+                $orderItem = new OrderItem();
+                $orderItem->order_id = $orderId;
+                $orderItem->product_id = $details['product_id'];
+                $orderItem->product_size = $details['size'] ?? 'NULL';
+                $orderItem->product_price = $details['price'];
+                $orderItem->branch_id = $details['branch_id'];
+                $orderItem->product_name = $details['name'];
+                $orderItem->quantity = $details['quantity'];
+                $orderItem->tip = is_array($tip_amount) ? array_sum($tip_amount) : ($tip_amount ?: 0);
+                $orderItem->sub_total = floatval($details['price']) * floatval($details['quantity']);
+                $orderItem->save();
+
+                if (isset($details['toppings_by_category'])) {
                     foreach ($details['toppings_by_category'] as $categoryId => $toppingIds) {
-                        // return $toppingIds;
                         foreach ($toppingIds as $toppingId) {
                             $orderItemTopping = new OrderItemToppings();
                             $orderItemTopping->order_item_id = $orderItem->id;
                             $orderItemTopping->topping_id = $toppingId;
-                            $orderItemTopping->category_id = $categoryId; // Save category ID
+                            $orderItemTopping->category_id = $categoryId;
                             $orderItemTopping->save();
+
                             $topping = Topping::find($toppingId);
                             if ($topping) {
                                 $total += $topping->price;
                             }
                         }
                     }
-                };
-                $order->total_amount = $total + $tip_amount + $branch->tax;
-                $order->save();
-
-                //loyality points code start
-                $points = $order->total_amount;
-                if ($user) {
-
-                    // Retrieve the existing points of the user
-                    $existingPoints = $user->point;
-                    // Add the new points to the existing points
-                    $totalPoints = $existingPoints + $points;
-                    // Round down to the nearest integer
-                    $totalPoints = floor($totalPoints);
-                    // Update the user's points
-                    $user->update(['point' => $totalPoints]);
                 }
-
-                $reward = Reward::where('user_id', $user->id)->first();
-                $redeemedPoints = $redeemed ? $redeemed : '0';
-                if ($totalPoints >= 150) {
-                    $rewards = floor(($totalPoints / 150)) * 5;
-                    if ($reward) {
-                        $redeemedPoints += $reward->redeemed;
-                        $reward->update([
-                            'rewards' => $rewards,
-                            'redeemed' => $redeemedPoints,
-                        ]);
-                    } else {
-                        Reward::create([
-                            'user_id' => $user->id,
-                            'rewards' => $rewards,
-                            'redeemed' => 0,
-                        ]);
-                    }
-                }
-                //loyality points code end
-
-                $orderCode = $order->code;
-                Mail::to($user->email)->send(new OrderConfirm($orderCode));
-                Session::forget(['cart', 'time', 'start_time', 'tip_amount', 'vehicle_color', 'vehicle_number', 'redeemed']);
-                // return redirect()->route('my-order')->with(['status' => true, 'message' => 'Order Placed Successfully']);
-                return response()->json($response->getResult());
-            } else {
-                $errors = $response->getErrors();
-                foreach ($errors as $error) {
-                    if ($error->getCode() === 'PAN_FAILURE') {
-                        return response()->json(['error' => $error->getDetail()], 400);
-                    }
-                }
-                return response()->json(['error' => 'Payment failed. Please try again later.'], 400);
             }
-        } catch (ApiException $e) {
-            $errorDetail = $e->getResponseBody()->errors[0]->detail;
-            return response()->json(['error' => $errorDetail], 400);
+
+            $order->total_amount = $total + ($tip_amount ?: 0) + $tax;
+            $order->save();
+
+            // ✅ Loyalty points logic
+            $points = $order->total_amount;
+            if ($user) {
+                $existingPoints = $user->point;
+                $totalPoints = floor($existingPoints + $points);
+                $user->update(['point' => $totalPoints]);
+            }
+
+            $reward = Reward::where('user_id', $user->id)->first();
+            $redeemedPoints = $redeemed ?: 0;
+            if ($totalPoints >= 150) {
+                $rewards = floor(($totalPoints / 150)) * 5;
+                if ($reward) {
+                    $redeemedPoints += $reward->redeemed;
+                    $reward->update([
+                        'rewards' => $rewards,
+                        'redeemed' => $redeemedPoints,
+                    ]);
+                } else {
+                    Reward::create([
+                        'user_id' => $user->id,
+                        'rewards' => $rewards,
+                        'redeemed' => 0,
+                    ]);
+                }
+            }
+
+            // ✅ Email notification
+            $orderCode = $order->code;
+            Mail::to($user->email)->send(new OrderConfirm($orderCode));
+
+            // ✅ Clear session
+    session()->forget('cart');
+    session()->forget('tip_amount');
+    session()->forget('vehicle_color');
+    session()->forget('vehicle_number');
+    session()->forget('time');
+    session()->forget('start_time'); 
+
+            return redirect()->route('my-order')->with(['status' => true, 'message' => 'Order placed successfully! Payment will be handled manually.']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['status' => false, 'message' => 'Error: ' . $e->getMessage()]);
         }
     }
+
     private function getAccessToken($branchId)
     {
         $accessTokens = [

@@ -24,4 +24,10 @@ class UserController extends Controller
         }
         return view('admin.users.rewards',compact('userRewards' , 'remaining','user'));
     }
+
+    public function destroy($id){
+        User::destroy($id);
+        return redirect()->back()->with(['status' => true, 'message' => 'Deleted Successfully']);
+
+    }
 }

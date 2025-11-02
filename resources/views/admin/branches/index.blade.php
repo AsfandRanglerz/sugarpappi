@@ -18,7 +18,7 @@
                                     <thead>
                                         <tr>
                                             <th>Sr.</th>
-                                            <th>Branch Number</th>
+                                            {{-- <th>Branch Number</th> --}}
                                             <th>Branch Name</th>
                                             <th>Email</th>
                                             <th>Phone Number</th>
@@ -31,7 +31,7 @@
                                         @foreach ($branches as $branch)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $branch->branch_number }}</td>
+                                                {{-- <td>{{ $branch->branch_number }}</td> --}}
                                                 <td>{{ $branch->name }}</td>
                                                 <td>{{ $branch->email }}</td>
                                                 <td>{{ $branch->phone_number }}</td>

@@ -24,6 +24,7 @@
                                             <th>Price</th>
                                             <th>Sizes</th>
                                             <th>Description</th>
+                                            <th>Featured</th>
                                             <th>Status</th>
                                             <th scope="col">Actions</th>
                                         </tr>
@@ -43,12 +44,12 @@
                                                     @if ($product->variants->isNotEmpty())
                                                         @php $prices = $product->variants->pluck('price')->filter()->implode(', $'); @endphp
                                                         @if ($prices)
-                                                            ${{ $prices }}
+                                                            £{{ $prices }}
                                                         @else
-                                                            ${{ $product->price }}
+                                                            £{{ $product->price }}
                                                         @endif
                                                     @else
-                                                        ${{ $product->price }}
+                                                        £{{ $product->price }}
                                                     @endif
                                                 </td>
                                                 <td>
@@ -67,6 +68,20 @@
                                                     @endif
                                                 </td>
                                                 <td>{!! $product->description !!}</td>
+                                                <td>
+                                                    @if ($product->is_featured)
+                                                        <a href="{{ route('admin.featured', ['id' => $product->id]) }}"
+                                                        class="btn btn-success" title="Click to Unfeature">
+                                                            <i class="fas fa-star"></i>
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ route('admin.featured', ['id' => $product->id]) }}"
+                                                        class="btn btn-secondary" title="Click to Feature">
+                                                            <i class="far fa-star"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
+
                                                 <td>
                                                     @if ($product->status == 1)
                                                         <div class="badge badge-success badge-shadow">Active</div>

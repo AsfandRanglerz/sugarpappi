@@ -134,7 +134,7 @@
                                             @endif
                                             <p class="small m-0">
                                                 {{ $topping->toppings->name }}
-                                                (${{ $topping->toppings->price }})
+                                                (£{{ $topping->toppings->price }})
                                             </p>
                                             @endforeach
                                             @else
@@ -153,7 +153,7 @@
                                         </td>
                                         <td>
                                             @foreach ($order->orderItem as $orderItem)
-                                            ${{ $orderItem->product_price }}
+                                            £{{ $orderItem->product_price }}
                                             @if (!$loop->last)
                                             ,
                                             @endif
@@ -169,7 +169,7 @@
                                         </td>
                                         <td>
                                             @foreach ($order->orderItem as $orderItem)
-                                            ${{ $orderItem->sub_total }}
+                                            £{{ $orderItem->sub_total }}
                                             @if (!$loop->last)
                                             ,
                                             @endif
@@ -186,7 +186,7 @@
                                             @endphp
 
                                             @if (!in_array($tip, $tips))
-                                            $ {{ $tip }}
+                                            £ {{ $tip }}
                                             @php
                                             $tips[] = $tip;
                                             @endphp
@@ -204,25 +204,25 @@
                                             @endphp
 
                                             @if (!in_array($branchTax, $branchTaxs))
-                                            $ {{ $branchTax }}
+                                            £ {{ $branchTax }}
                                             @php
                                             $branchTaxs[] = $branchTax;
                                             @endphp
                                             @endif
                                             @endforeach
                                         </td>
-                                        <td>${{ $order->total_amount }}</td>
+                                        <td>£{{ $order->total_amount }}</td>
                                         @php
                                         $redeemedAmount = is_numeric($order->redeemed) ? $order->redeemed : 0;
                                         $afterRedeemed = $order->total_amount - $redeemedAmount;
                                         @endphp
                                         @if($afterRedeemed < $order->total_amount)
-                                        <td>${{ $afterRedeemed }}</td>
+                                        <td>£{{ $afterRedeemed }}</td>
                                         @else
                                         <td>-</td>
                                         @endif
                                         @if($redeemedAmount > 0)
-                                        <td>${{ $redeemedAmount }}</td>
+                                        <td>£{{ $redeemedAmount }}</td>
                                         @else
                                         <td>-</td>
                                         @endif

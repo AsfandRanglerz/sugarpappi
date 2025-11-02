@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Sugar Papi</title>
+    <title>Sugar Pappi</title>
       <!-- Developed By Ranglerz -->
       <link rel="stylesheet" href="https://www.ranglerz.com/cost-to-make-a-web-ios-or-android-app-and-how-long-does-it-take.php">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -11,7 +11,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="{{ asset('public/img/az-logo.png') }}" rel="icon">
+    <link href="{{ asset('public/img/logo.png') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="{{ asset('https://fonts.googleapis.com') }}">

@@ -47,7 +47,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 pl-sm-0 pr-sm-3">
+                                        {{-- <div class="col-sm-6 pl-sm-0 pr-sm-3">
                                             <div class="form-group mb-2">
                                                 <label for="phone">Branch No#</label>
                                                 <input id="branch_number" type="number" placeholder="Enter branch no"
@@ -56,7 +56,7 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="row mx-0 px-4">
                                         <div class="col-sm-6 pl-sm-0 pr-sm-2">

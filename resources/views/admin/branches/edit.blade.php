@@ -38,13 +38,13 @@
                                                      value="{{ $branch->phone_number }}" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 pl-sm-0 pr-sm-3">
+                                        {{-- <div class="col-sm-6 pl-sm-0 pr-sm-3">
                                             <div class="form-group mb-2">
                                                 <label for="phone">Branch No#</label>
                                                     <input type="number"  name="branch_number"
                                                     value="{{ $branch->branch_number }}" class="form-control">
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="row mx-0 px-4">
                                         <div class="col-sm-6 pl-sm-0 pr-sm-2">

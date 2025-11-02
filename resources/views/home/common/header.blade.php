@@ -146,7 +146,7 @@
                       class="fa fa-shopping-cart me-3 position-relative header-icon"><span
                           class="badge cart-counter cart-counter-1"></span></span>
               </a>
-              {{-- <div class="carting-card dropdown-menu py-3 px-0">
+              <div class="carting-card dropdown-menu py-3 px-0">
                   <div class="border-bottom mb-1 pb-3 px-3">
                       <h5 class="m-0">Your Cart (<span class="cart-counter-1"></span>)</h5>
                   </div>
@@ -212,13 +212,12 @@
                               class="btn btn-danger disabled px-5 button-disable">Continue To Cart</a>
                       @endif
                   </div>
-              </div> --}}
+              </div>
           </div>
           @if (Auth::guard('user')->check())
               <a href="{{ route('user-logout') }}" class="btn btn-primary py-2 px-4" id="logout">Logout</a>
           @else
-              {{-- <a href="{{ asset('login') }}" class="btn btn-primary py-2 px-4">Login</a> --}}
-              <a href="" class="btn btn-primary py-2 px-4">Login</a>
+              <a href="{{ asset('login') }}" class="btn btn-primary py-2 px-4">Login</a>
           @endif
       </div>
   </nav>

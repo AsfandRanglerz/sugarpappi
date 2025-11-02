@@ -228,7 +228,7 @@
         <div class="container-fluid">
             <div class="container-fluid">
                 <div class="container-fluid position-relative">
-                    <img src="{{ asset('public/img/pic-top.png') }}" alt="" class="banner-img w-100">
+                    <img src="{{ asset('public/img/pic-top.jpg') }}" alt="" class="banner-img w-100">
                     <!-- Profile image -->
                     <div class="position-absolute banner-prof-img">
                         <img src="{{ asset('public/img/profile-top.png') }}" alt="Profile">
@@ -245,7 +245,7 @@
                     <div class="container-fluid">
                         <div class="row mx-0">
                             <div class="col-lg-8">
-                                <h2>Sugar Papi</h2>
+                                <h2>Sugar Pappi</h2>
                                 <span class="text-dark rating small">4.5 <span class="bi bi-star-half text-black"></span>
                                     <span class="text-muted small">(2,000+)</span>
                                 </span>
@@ -258,7 +258,14 @@
                                 <span class="small"><span class="separator">•</span> Steak & Cheese Sandwich</span>
                                 <span class="small"><span class="separator">•</span> Tea & Coffee</span>
                                 <p class="mb-0 small">Min order value for this shop is €12</p>
-                                <p class="mb-0 small">Timing: 4:30 PM – 4:00 AM</p>
+                                @if ($timeSlots->isNotEmpty())
+                                    <p class="mb-0 small">
+                                        Timing:
+                                        {{ \Carbon\Carbon::parse($timeSlots->first()->start_pickup_time)->format('g:i A') }}
+                                        –
+                                        {{ \Carbon\Carbon::parse($timeSlots->first()->end_pickup_time)->format('g:i A') }}
+                                    </p>
+                                @endif
                                 <p class="mb-0 small">Aldow Industrial Estate, Pod 10, Unit D, Jacuna Kitchen,
                                     Ardwick,, Manchester, EMEA M12 6AE</p>
                                 <p class="small text-dark">Sugar Papi in Chorltonne upon Medlock, Manchester, is a dessert
@@ -675,30 +682,8 @@
                         </a>
                     </div>
                 @endforeach
-                @foreach ($products as $product)
-                    <div class="item">
-                        <a class="popular-item bg-transparent border rounded p-4 d-block text-center h-100"
-                            href="#" data-bs-toggle="modal" data-bs-target="#menuModal-{{ $product->id }}">
-                            <div class="mb-3 d-flex justify-content-center">
-                                <img class="img-fluid" src="{{ asset($product->image) }}"
-                                    style="width: 150px; height: 150px; object-fit: cover; border-radius: 10px;">
-                            </div>
-                            <div class="mb-2">
-                                <h5 class="mb-2 main-heading">{{ $product->name }}</h5>
-                                <p class="mb-2">
-                                    @if ($product->variants && $product->variants->isNotEmpty())
-                                        <span class="badge bg-primary fs-6 py-2 px-3">From
-                                            £{{ $product->variants->first()->price }}</span>
-                                    @else
-                                        <span class="badge bg-primary fs-6 py-2 px-3">£{{ $product->price }}</span>
-                                    @endif
-                                </p>
-                            </div>
-                            <p class="mb-0 text-muted small">{!! $product->description !!}</p>
-                        </a>
-                    </div>
-                @endforeach
             </div>
+
             <!-- <div class="text-center">
             <a class="btn btn-primary py-3 px-5 mt-5" href="{{ route('get-our-menu') }}">Explore More</a>
         </div> -->
@@ -716,7 +701,12 @@
                 <div id="menuContainer"
                     class="d-flex flex-column align-items-center justify-content-center flex-wrap">
                     <div class="text-center">
-                        <h5 class="section-title ff-secondary fw-normal m-0">4:30 PM – 4:00 AM</h5>
+                    @if ($timeSlots->isNotEmpty())
+                        <h5 class="section-title ff-secondary fw-normal m-0">
+                            {{ \Carbon\Carbon::parse($timeSlots->first()->start_pickup_time)->format('g:i A') }} – 
+                            {{ \Carbon\Carbon::parse($timeSlots->first()->end_pickup_time)->format('g:i A') }}
+                        </h5>
+                    @endif
                         <h3 class="m-0">Explore Our Complete Menu</h3>
                     </div>
                     <div class="w-100 d-flex align-items-center justify-content-end gap-2">

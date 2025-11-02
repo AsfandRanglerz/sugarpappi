@@ -221,4 +221,18 @@ class ProductController extends Controller
         $product->update(['status' => $product->status == 0 ? '1' : '0']);
         return redirect()->back()->with(['status' => true, 'message' => 'Updated Successfully']);
     }
+
+    public function toggleFeatured($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->is_featured = !$product->is_featured;
+        $product->save();
+
+        $message = $product->is_featured
+            ? 'Product marked as Featured successfully!'
+            : 'Product unfeatured successfully!';
+
+        return redirect()->back()->with('message', $message);
+    }
+
 }

@@ -78,6 +78,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     // User Views
     Route::get('user', [UserController::class, 'userView'])->name('users.index');
     Route::get('user/rewards/{id}', [UserController::class, 'rewards'])->name('rewards');
+    Route::delete('/user-delete/{id}', [UserController::class, 'destroy'])->name('users-delete');
     // User Views End
 
     /** resource controller */
@@ -93,6 +94,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::resource('policy', PolicyController::class);
     Route::resource('terms', TermConditionController::class);
     Route::resource('faq', FaqController::class);
+    Route::get('/featured/{id}', [ProductController::class, 'toggleFeatured'])->name('admin.featured');
 
     //Time Slots
     Route::get('time-slots', [TimeController::class, 'index'])->name('time-slot.index');

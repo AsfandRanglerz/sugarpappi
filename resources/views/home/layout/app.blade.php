@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Sugar Papi</title>
+    <title>Sugar Pappi</title>
       <!-- Developed By Ranglerz -->
       <link rel="stylesheet" href="https://www.ranglerz.com/cost-to-make-a-web-ios-or-android-app-and-how-long-does-it-take.php">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">

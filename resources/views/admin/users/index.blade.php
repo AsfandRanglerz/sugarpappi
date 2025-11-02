@@ -20,8 +20,9 @@
                                             <th>Sr.</th>
                                             <th>User Name</th>
                                             <th>Email</th>
-                                            <th>Loyalty Points</th>
-                                            <th>Rewards</th>
+                                            {{-- <th>Loyalty Points</th> --}}
+                                            {{-- <th>Rewards</th> --}}
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -29,10 +30,34 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->point ?? '0' }}</td>
-                                                <td><a class="btn btn-info"
-                                                    href="{{ route('rewards', $user->id) }}">Rewards</a></td>
+                                                <td>
+                                                    @if(!empty($user->email))
+                                                        <a href="{{ 'mailto:' . $user->email }}" 
+                                                        class="text-primary" 
+                                                        style="text-decoration: underline; word-break: break-all; color: #007bff !important;">
+                                                            {{ $user->email }}
+                                                        </a>
+                                                    @else
+                                                        <span class="text-muted">No Email</span>
+                                                    @endif
+                                                </td>
+                                                {{-- <td>{{ $user->point ?? '0' }}</td> --}}
+                                                {{-- <td><a class="btn btn-info" href="{{ route('rewards', $user->id) }}">Rewards</a></td> --}}
+                                                <td>
+                                                    <form id="delete-form-{{ $user->id }}" 
+                                                        action="{{ route('users-delete', $user->id) }}" 
+                                                        method="POST" style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+
+                                                    <button class="show_confirm btn btn-danger" 
+                                                            data-form="delete-form-{{ $user->id }}" 
+                                                            type="button">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+
                                             </tr>
                                         @endforeach
 
@@ -63,10 +88,37 @@
         </script>
     @endif
     <script>
-        $(document).ready(function() {
-            $('#table_id_events').DataTable()
+        // $(document).ready(function() {
+        //     $('#table_id_events').DataTable()
 
-        })
+        // })
+        $(document).ready(function() {
+
+            // ===== DataTable Initialization =====
+            if ($.fn.DataTable.isDataTable('#table_id_events')) {
+                $('#table_id_events').DataTable().destroy();
+            }
+            $('#table_id_events').DataTable();
+
+            // ===== SweetAlert2 Delete Confirmation =====
+            $(document).on('click', '.show_confirm', function(event) {
+                event.preventDefault();
+                var formId = $(this).data("form");
+                var form = document.getElementById(formId);
+
+                swal({
+                    title: "Are you sure you want to delete this record?",
+                    text: "If you delete this, it will be gone forever.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
+            });
+        });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 

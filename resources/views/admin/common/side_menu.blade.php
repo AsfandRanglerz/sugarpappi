@@ -59,10 +59,10 @@
                     <i class="fas fa-images"></i><span>Our Gallery</span></a>
             </li>
             {{-- Menu Gallery  --}}
-            <li class="dropdown {{ request()->is('admin/m-gallery*') ? 'active' : '' }}">
+            {{-- <li class="dropdown {{ request()->is('admin/m-gallery*') ? 'active' : '' }}">
                 <a href="{{ route('m-gallery.index') }}" class="nav-link">
                     <i class="fas fa-images"></i><span>Menu Gallery</span></a>
-            </li>
+            </li> --}}
 
             <li class="dropdown {{ request()->is('admin/branch*') ? 'active' : '' }}">
                 <a href="{{ route('branches.index') }}" class="nav-link">
@@ -91,18 +91,18 @@
                         Policy</span></a>
             </li>
             <li class="dropdown {{ request()->is('admin/terms*') ? 'active' : '' }}">
-                <a href="{{ route('terms.index') }}" class="nav-link"><i class="fas fa-file-alt"></i><span>Term &
-                        Condition</span></a>
+                <a href="{{ route('terms.index') }}" class="nav-link"><i class="fas fa-file-alt"></i><span>Terms &
+                        Conditions</span></a>
             </li>
             <li class="dropdown {{ request()->is('admin/faq*') ? 'active' : '' }}">
                 <a href="{{ route('faq.index') }}" class="nav-link"><i
                         data-feather="monitor"></i><span>FAQ's</span></a>
             </li>
-            <li class="dropdown {{ request()->is('admin/seamoss*') ? 'active' : '' }}">
+            {{-- <li class="dropdown {{ request()->is('admin/seamoss*') ? 'active' : '' }}">
                 <a href="{{ route('seamoss.index') }}" class="nav-link"><i data-feather="video"></i><span>NEW!
                         SEA MOSS
                     </span></a>
-            </li>
+            </li> --}}
             </li>
         </ul>
     </aside>

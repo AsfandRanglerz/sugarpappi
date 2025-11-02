@@ -411,9 +411,10 @@ button.tab-scroll-btn.left.disabled, button.tab-scroll-btn.right.disabled {
 }
 
 .banner-container .banner-img {
-    height: 18.75rem;
+    height: 23.75rem;
     border-radius: 0.75rem;
     object-fit: cover;
+    object-position: top;
 }
 
 /*** Hero Header ***/

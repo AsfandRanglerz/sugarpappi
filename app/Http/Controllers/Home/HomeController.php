@@ -28,7 +28,12 @@ class HomeController extends Controller
         // $popularMenu = Menu::where('name', 'MOST POPULAR')->first();
         $user = Auth::user();
 
-        $products = Product::with('variants')->where('status' , 1)->orderBy('id', 'DESC')->take(4)->get();
+        $products = Product::with('variants')
+            ->where('status', 1)
+            ->where('is_featured', 1) 
+            ->orderBy('id', 'DESC')
+            // ->take(4)
+            ->get();
         
         // Get all menu categories with products for full menu display
         $menuCategories = Menu::with(['products' => function ($query) {

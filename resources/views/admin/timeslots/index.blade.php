@@ -15,37 +15,38 @@
                             </div>
                             <div class="card-body">
                                 <form method="POST" class="row" action="{{ route('time-slot.store') }}">
-                                    @csrf
-                                    <div class="form-group col-md-6 col-sm-12 col-lg-6">
-                                        <label>Start PicK Up Time</label>
-                                        <div class="input-group col-12">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <i class="fas fa-clock"></i>
-                                                </div>
-                                            </div>
-                                            <input type="text" class="form-control timepicker" name="start_pickup_time"
-                                                value="{{ $existingTimeSlot->start_pickup_time ?? old('start_pickup_time') }}">
+                                @csrf
+                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                    <label>Start Time</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-clock"></i>
+                                            </span>
                                         </div>
-                                        @error('start_pickup_time')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <input type="text" class="form-control timepicker" name="start_pickup_time"
+                                            value="{{ $existingTimeSlot->start_pickup_time ?? old('start_pickup_time') }}">
                                     </div>
-                                    <div class="form-group col-md-6 col-sm-12 col-lg-6">
-                                        <label>End Pick Up Time</label>
-                                        <div class="input-group col-12">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <i class="fas fa-clock"></i>
-                                                </div>
-                                            </div>
-                                            <input type="text" class="form-control timepicker" name="end_pickup_time"
-                                                value="{{ $existingTimeSlot->end_pickup_time ?? old('end_pickup_time') }}">
+                                    @error('start_pickup_time')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                    <label>End Time</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-clock"></i>
+                                            </span>
                                         </div>
-                                        @error('end_pickup_time')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <input type="text" class="form-control timepicker" name="end_pickup_time"
+                                            value="{{ $existingTimeSlot->end_pickup_time ?? old('end_pickup_time') }}">
                                     </div>
+                                    @error('end_pickup_time')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                     <div class="col-12 text-center">
                                         @if ($existingTimeSlotsCount > 0)
                                             <button type="submit" class="btn btn-success" name="action"
