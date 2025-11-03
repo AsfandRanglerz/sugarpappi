@@ -248,7 +248,7 @@
             updateServerCart(productId, variantId, quantity + 1);
             let b = $(this).closest('.carting-child');
             let d = b.find('.product-price').text();
-            let c = b.find(".total-price").text('$' + (parseFloat(Number(d) * (quantity + 1)).toFixed(2)));
+            let c = b.find(".total-price").text('£' + (parseFloat(Number(d) * (quantity + 1)).toFixed(2)));
         });
 
         $(document).on('click', '.decrement-btn', function() {
@@ -263,7 +263,7 @@
                 updateServerCart(productId, variantId, quantity - 1);
                 let b = $(this).closest('.carting-child');
                 let d = b.find('.product-price').text();
-                let c = b.find(".total-price").text('$' + (parseFloat(Number(d) * (quantity - 1)).toFixed(2))  )          ;
+                let c = b.find(".total-price").text('£' + (parseFloat(Number(d) * (quantity - 1)).toFixed(2))  )          ;
             }
         });
         function updateServerCart(productId, variantId, quantity) {
