@@ -52,7 +52,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'g-recaptcha-response' => 'required',
+            // 'g-recaptcha-response' => 'required',
         ]);
         $user = new User();
         $user->name = $validatedData['name'];
@@ -63,7 +63,7 @@ class AuthController extends Controller
             $data['username'] = $user->name;
             $data['useremail'] = $user->email;
             $data['password'] = $request->password;
-            Mail::to($user->email)->send(new UserConfirmRegistration($data));
+            // Mail::to($user->email)->send(new UserConfirmRegistration($data));
             return redirect('/login')->with(['status' => true, 'message' => 'Register Succssfully']);
         } else {
             return redirect()->back()->with(['status' => true,  'message' => 'Something Went Wrong,Try Again!']);
