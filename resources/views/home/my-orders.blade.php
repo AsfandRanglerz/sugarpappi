@@ -72,9 +72,9 @@
     <section class="section">
         <div class="container-xxl bg-white p-0">
             <div class="container-xxl position-relative p-0">
-                <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container-xxl py-5 bg-primary hero-header mb-5">
                     <div class="container text-center my-lg-5 pt-lg-5 pb-lg-4">
-                        <h1 class="display-3 text-white mb-3 animated slideInDown">My Orders</h1>
+                        <h1 class="display-3 text-dark mb-3 animated slideInDown">My Orders</h1>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                                                                         </span>
                                                                     </h5>
                                                                     <h6 class="small">
-                                                                        (${{ $item->product->price ? $item->product->price : $item->product_price }})
+                                                                        (£{{ $item->product->price ? $item->product->price : $item->product_price }})
                                                                     </h6>
                                                                     {{-- Toppings  --}}
                                                                     @if ($item->orderToppings->isEmpty() || $order->orderToppings->where('toppings', '!=', null)->isEmpty())
@@ -145,7 +145,7 @@
                                                                                 @if ($orderItem->toppings)
                                                                                     <p class="small m-0">
                                                                                         {{ $orderItem->toppings->name }}
-                                                                                        (${{ $orderItem->toppings->price }})
+                                                                                        (£{{ $orderItem->toppings->price }})
                                                                                     </p>
                                                                                 @else
                                                                                     <div
@@ -185,19 +185,19 @@
             <div class="mt-2">
                 <div class="d-flex justify-content-between">
                     <p class="text-muted m-0">Total Amount</p>
-                    <p class="total-value m-0">${{ $order->order->total_amount - $order->tip - $order->branch->tax }}
+                    <p class="total-value m-0">£{{ $order->order->total_amount - $order->tip - $order->branch->tax }}
                     </p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Estimated taxes (New York)</p>
-                    <p class="tax-value mb-1">${{ $order->branch->tax }}</p>
+                    <p class="tax-value mb-1">£{{ $order->branch->tax }}</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Tip</p>
                     @if ($order->tip)
-                        <p class="tip-value mb-1">${{ $order->tip }}</p>
+                        <p class="tip-value mb-1">£{{ $order->tip }}</p>
                     @else
-                        <p class="tip-value mb-1">$0</p>
+                        <p class="tip-value mb-1">£0</p>
                     @endif
                 </div>
                 @php
@@ -205,7 +205,7 @@
                 @endphp
                 <div class="d-flex justify-content-between">
                     <p class="text-muted m-0">Estimated item total</p>
-                    <p class="total-value m-0">${{ $total }}</p>
+                    <p class="total-value m-0">£{{ $total }}</p>
                 </div>
             </div>
             <!-- Billing End -->
@@ -269,7 +269,7 @@
                                                                     </span>
                                                                 </h5>
                                                                 <h6 class="small">
-                                                                    (${{ $item->product->price ? $item->product->price : $item->product_price }})
+                                                                    (£{{ $item->product->price ? $item->product->price : $item->product_price }})
                                                                 </h6>
                                                                 {{-- Toppings  --}}
                                                                 @if ($item->orderToppings->isEmpty() || $order->orderToppings->where('toppings', '!=', null)->isEmpty())
@@ -288,7 +288,7 @@
                                                                             @if ($orderItem->toppings)
                                                                                 <p class="small m-0">
                                                                                     {{ $orderItem->toppings->name }}
-                                                                                    (${{ $orderItem->toppings->price }})
+                                                                                    (£{{ $orderItem->toppings->price }})
                                                                                 </p>
                                                                             @else
                                                                                 <div
@@ -329,24 +329,24 @@
                                                     <div class="d-flex justify-content-between">
                                                         <p class="text-muted m-0">Total Amount</p>
                                                         <p class="total-value m-0">
-                                                            ${{ $order->order->total_amount - $order->tip - $order->branch->tax }}
+                                                            £{{ $order->order->total_amount - $order->tip - $order->branch->tax }}
                                                         </p>
                                                     </div>
                                                     <div class="d-flex justify-content-between">
                                                         <p class="text-muted mb-1">Estimated taxes (New York)</p>
-                                                        <p class="tax-value mb-1">${{ $order->branch->tax }}</p>
+                                                        <p class="tax-value mb-1">£{{ $order->branch->tax }}</p>
                                                     </div>
                                                     <div class="d-flex justify-content-between">
                                                         <p class="text-muted mb-1">Tip</p>
                                                         @if ($order->tip)
-                                                            <p class="tip-value mb-1">${{ $order->tip }}</p>
+                                                            <p class="tip-value mb-1">£{{ $order->tip }}</p>
                                                         @else
-                                                            <p class="tip-value mb-1">$0</p>
+                                                            <p class="tip-value mb-1">£0</p>
                                                         @endif
                                                     </div>
                                                     <div class="d-flex justify-content-between">
                                                         <p class="text-muted m-0">Estimated item total</p>
-                                                        <p class="total-value m-0">${{ $order->order->total_amount }}
+                                                        <p class="total-value m-0">£{{ $order->order->total_amount }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -411,7 +411,7 @@
                                                                     </span>
                                                                 </h5>
                                                                 <h6 class="small">
-                                                                    (${{ $item->product->price ? $item->product->price : $item->product_price }})
+                                                                    (£{{ $item->product->price ? $item->product->price : $item->product_price }})
                                                                 </h6>
                                                                 {{-- Toppings  --}}
                                                                 @if ($item->orderToppings->isEmpty() || $order->orderToppings->where('toppings', '!=', null)->isEmpty())
@@ -430,7 +430,7 @@
                                                                             @if ($orderItem->toppings)
                                                                                 <p class="small m-0">
                                                                                     {{ $orderItem->toppings->name }}
-                                                                                    (${{ $orderItem->toppings->price }})
+                                                                                    (£{{ $orderItem->toppings->price }})
                                                                                 </p>
                                                                             @else
                                                                                 <div
@@ -466,19 +466,19 @@
                                                     <div class="d-flex justify-content-between">
                                                         <p class="text-muted m-0">Total Amount</p>
                                                         <p class="total-value m-0">
-                                                            ${{ $order->order->total_amount - $order->tip - $order->branch->tax }}
+                                                            £{{ $order->order->total_amount - $order->tip - $order->branch->tax }}
                                                         </p>
                                                     </div>
                                                     <div class="d-flex justify-content-between">
                                                         <p class="text-muted mb-1">Estimated taxes (New York)</p>
-                                                        <p class="tax-value mb-1">${{ $order->branch->tax }}</p>
+                                                        <p class="tax-value mb-1">£{{ $order->branch->tax }}</p>
                                                     </div>
                                                     <div class="d-flex justify-content-between">
                                                         <p class="text-muted mb-1">Tip</p>
                                                         @if ($order->tip)
-                                                            <p class="tip-value mb-1">${{ $order->tip }}</p>
+                                                            <p class="tip-value mb-1">£{{ $order->tip }}</p>
                                                         @else
-                                                            <p class="tip-value mb-1">$0</p>
+                                                            <p class="tip-value mb-1">£0</p>
                                                         @endif
                                                     </div>
                                                     @php
@@ -486,7 +486,7 @@
                                                     @endphp
                                                     <div class="d-flex justify-content-between">
                                                         <p class="text-muted m-0">Estimated item total</p>
-                                                        <p class="total-value m-0">${{ $total }}</p>
+                                                        <p class="total-value m-0">£{{ $total }}</p>
                                                     </div>
                                                 </div>
                                                 <!-- Billing End -->
