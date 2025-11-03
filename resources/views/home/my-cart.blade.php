@@ -155,9 +155,9 @@
     <section class="section">
         <div class="container-xxl bg-white p-0">
             <div class="container-xxl position-relative p-0">
-                <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container-xxl py-5 bg-primary hero-header mb-5">
                     <div class="container text-center my-lg-5 pt-lg-5 pb-lg-4">
-                        <h1 class="display-3 text-white mb-3 animated slideInDown">Your Cart</h1>
+                        <h1 class="display-3 text-dark mb-3 animated slideInDown">Your Cart</h1>
                     </div>
                 </div>
             </div>
@@ -478,7 +478,7 @@
                                     <div class="ms-3 w-100 order-card parent-element">
                                         <div class="d-flex  justify-content-between">
                                             <h5 class="m-0">{{ $item['name'] }} <span style="font-size:12px">{{ $item['size'] ? '(' . $item['size'] . ')' : '' }}</h5>
-                                            <p class="mb-0 price">${{ $item['price'] }}</p>
+                                            <p class="mb-0 price">£{{ $item['price'] }}</p>
                                         </div>
                                         <p class="mb-1">Variation:Regular</h6>
                                             @if ($item['toppings_by_category'])
@@ -499,7 +499,7 @@
                                                             <p class="small m-0">
                                                                 {{ $topping->name }}
                                                                 <span class='topping_price-1'>
-                                                                    (${{ number_format($topping->price, 2) }})
+                                                                    (£{{ number_format($topping->price, 2) }})
                                                                 </span>
                                                             </p>
 
@@ -619,7 +619,7 @@
                                 <p class>ADD A TIP</p>
                                 <!-- tips Button -->
                                 <div class="collapse-div mt-3 align-items-center justify-content-between">
-                                    <span class="border border-2 px-2 py-3 d-flex align-items-center">$ <input
+                                    <span class="border border-2 px-2 py-3 d-flex align-items-center">£ <input
                                             type="text" name="tipInputName"
                                             class="ps-2 w-100 cart_input increment-input tip-input"></span>
                                 </div>

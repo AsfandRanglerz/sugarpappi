@@ -227,7 +227,7 @@
       <div class="overlay-content">
           <form action="{{ route('product.search') }}" method="GET" class="mb-0">
               <input type="text" placeholder="Search Your Favorite Food ..." name="search">
-              <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span></button>
+              <button type="submit" class="btn btn-primary" style="border: none;border-radius: 0"><span class="fa fa-search"></span></button>
           </form>
       </div>
   </div>

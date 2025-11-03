@@ -95,8 +95,7 @@
                         Conditions</span></a>
             </li>
             <li class="dropdown {{ request()->is('admin/faq*') ? 'active' : '' }}">
-                <a href="{{ route('faq.index') }}" class="nav-link"><i
-                        data-feather="monitor"></i><span>FAQ's</span></a>
+                <a href="{{ route('faq.index') }}" class="nav-link"><i class="fas fa-file-alt"></i><span>FAQ's</span></a>
             </li>
             {{-- <li class="dropdown {{ request()->is('admin/seamoss*') ? 'active' : '' }}">
                 <a href="{{ route('seamoss.index') }}" class="nav-link"><i data-feather="video"></i><span>NEW!
