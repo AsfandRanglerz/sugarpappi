@@ -26,7 +26,7 @@
                                             <div class="form-group mb-2">
                                                 <label>Branch Email</label>
                                                 <input type="email" placeholder="email" name="email" id="email"
-                                                    value="{{ $branch->email }}" class="form-control" readonly>
+                                                    value="{{ $branch->email }}" class="form-control">
                                             </div>
                                         </div>
                                     </div>
