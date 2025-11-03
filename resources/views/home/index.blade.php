@@ -382,24 +382,69 @@
                                     </div>
                                     <div class="d-flex align-items-start">
                                         <div class="form-check">
-                                            <input class="mt-0 loc-input form-check-input" type="radio" checked
-                                                id="location-1" name="location">
+                                            {{-- <input class="mt-0 loc-input form-check-input" type="radio" checked
+                                                id="location-1" name="location"> --}}
                                         </div>
-                                        <label for="location-1" class="ms-1" style="cursor: pointer">
-                                            <p class="small h6">Store Pickup</p>
-                                            @foreach ($branches as $index => $branch)
-                                                @if ($branch->status == 1)
-                                                    <input type="hidden" name="branch_id" value="{{ $branch->id }}">
-                                                    <p class="small fw-bold m-0">{{ $branch->name }}</p>
-                                                    <p class="small fw-bold m-0 sel-location">{{ $branch->location }}</p>
-                                                @endif
-                                            @endforeach
+                                        {{-- <label for="location-1" class="ms-1" style="cursor: pointer">
+                                         <p class="small h6">Store Pickup</p> --}}
+
+                                                @foreach ($branches as $index => $branch)
+                                                    @if ($branch->status == 1)
+                                                        <div class="branch-option mb-3">
+                                                            <input type="hidden" name="branch_id" value="{{ $branch->id }}">
+
+                                                            {{-- Store Pickup Option --}}
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" 
+                                                                    type="radio" 
+                                                                    name="status" 
+                                                                    id="pickupStatus{{ $branch->id }}" 
+                                                                    value="1" 
+                                                                    checked 
+                                                                    onchange="toggleDelivery('{{ $branch->id }}')">
+                                                                <label class="form-check-label fw-bold small" for="pickupStatus{{ $branch->id }}">
+                                                                    Store Pickup
+                                                                </label>
+                                                            </div>
+
+                                                            {{-- Store Pickup Address --}}
+                                                            <p class="small fw-bold m-0 sel-location mt-1" id="storePickupSection{{ $branch->id }}">
+                                                                <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($branch->location) }}" 
+                                                                target="_blank" 
+                                                                style="text-decoration: none; color: inherit;">
+                                                                    {{ $branch->location }}
+                                                                </a>
+                                                            </p>
+
+                                                            {{-- Home Delivery Option (below pickup) --}}
+                                                            <div class="form-check mt-3">
+                                                                <input class="form-check-input" 
+                                                                    type="radio" 
+                                                                    name="status" 
+                                                                    id="homeStatus{{ $branch->id }}" 
+                                                                    value="2" 
+                                                                    onchange="toggleDelivery('{{ $branch->id }}')">
+                                                                <label class="form-check-label fw-bold small" for="homeStatus{{ $branch->id }}">
+                                                                    Home Delivery
+                                                                </label>
+                                                            </div>
+
+                                                            {{-- Delivery Address Input (hidden by default) --}}
+                                                            <div id="deliveryAddressField{{ $branch->id }}" class="mt-2" style="display: none;">
+                                                                <input type="text" name="delivery_address" class="form-control" placeholder="Enter your delivery address">
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+
+
+                                            
                                             <input type="hidden" id="orderLocation" name="address"
                                                 value="2562 Central Park Av yonkers, NY">
                                             {{-- <h6 class="mt-2 mb-0 chose-location"><a href="#" data-bs-toggle="modal"
                                         data-bs-target="#locationModal">Choose different
                                         location</a></h6> --}}
-                                        </label>
+                                        {{-- </label> --}}
                                     </div>
                                 </div>
                                 <!-- Location End -->
@@ -1463,5 +1508,26 @@
             }
         });
     </script>
+
+   <script>
+function toggleDelivery(branchId) {
+    const pickupRadio = document.getElementById(`pickupStatus${branchId}`);
+    const homeRadio = document.getElementById(`homeStatus${branchId}`);
+    const pickupSection = document.getElementById(`storePickupSection${branchId}`);
+    const deliveryField = document.getElementById(`deliveryAddressField${branchId}`);
+
+    if (homeRadio.checked) {
+        // Home Delivery selected
+        pickupSection.style.display = 'none';
+        deliveryField.style.display = 'block';
+    } else if (pickupRadio.checked) {
+        // Store Pickup selected
+        pickupSection.style.display = 'block';
+        deliveryField.style.display = 'none';
+    }
+}
+</script>
+
+
 
 @endsection
