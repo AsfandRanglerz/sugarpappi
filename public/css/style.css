@@ -6,6 +6,14 @@
     --dark: #482a15;
 }
 
+form button[type="submit"] {
+    border: 1px solid #000;
+}
+
+.light-box-shadow {
+    box-shadow: 0 0 10px 2px rgba(200, 200, 200, 0.6);
+}
+
 .delivery-table {
     display: flex;
     text-align: center;

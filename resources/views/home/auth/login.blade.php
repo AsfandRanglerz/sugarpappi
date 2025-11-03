@@ -5,10 +5,10 @@
         <div class="container-xxl bg-white lolo p-0">
             <div class="container-xxl py-5 pb-lg-5 pb-0 px-0 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="row g-0">
-                    <div class="col-xl-6 col-sm-8 col-11 mx-auto bg-dark d-flex align-items-center">
-                        <div class="p-xl-5 p-4 wow fadeInUp" data-wow-delay="0.2s">
-                            <h5 class="section-title ff-secondary text-start text-primary fw-normal">Login</h5>
-                            <h1 class="text-white mb-4">Your Nutrition & Smoothie Adventure Begins Here</h1>
+                    <div class="col-xl-6 col-sm-8 col-11 mx-auto bg-primary d-flex align-items-center">
+                        <div class="p-xl-5 p-4 wow fadeInUp light-box-shadow" data-wow-delay="0.2s">
+                            <h5 class="section-title ff-secondary text-start text-dark fw-normal">Login</h5>
+                            <h1 class="text-dark mb-4">Welcome back! Your Sugar Pappi cravings await.</h1>
                             <form method="POST" action="{{ url('users/login') }}" id="loginForm">
                                 @csrf
                                 <div class="row g-3">
@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="text-end mb-3">
-                                            <a href="{{ asset('forgot-password') }}">Forget Password?</a>
+                                            <a href="{{ asset('forgot-password') }}" class="text-dark">Forget Password?</a>
                                         </div>
                                         {{--  <div class="row">
                                             <div class="col-md-12 mb-3">
@@ -49,8 +49,8 @@
                                         </div>  --}}
                                         <button class="btn btn-primary w-100 py-3" type="submit"
                                             id="loginButton">Login</button>
-                                        <h5 class="text-white text-center mt-4 mb-0">New User? <a
-                                                href="{{ route('getRegistor') }}">Sign Up</a></h5>
+                                        <h5 class="text-dark text-center mt-4 mb-0">New User? <a
+                                                href="{{ route('getRegistor') }}" class="text-dark">Sign Up</a></h5>
                                     </div>
                                 </div>
                             </form>

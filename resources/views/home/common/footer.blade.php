@@ -4,7 +4,7 @@
             <div class="col-lg-4 col-md-6">
                 <h4 class="section-title ff-secondary text-start fw-normal mb-4">Links</h4>
                 <a class="btn btn-link" href="{{route('index')}}">Home</a>
-                <a class="btn btn-link" href="{{route('get-our-gallery')}}">Explore Sugar Papi Gallery</a>
+                <a class="btn btn-link" href="{{route('get-our-gallery')}}">Explore Sugar Pappi Gallery</a>
                 <a class="btn btn-link" href="{{route('get-faqs')}}">FAQ's</a>
                 <div class="mt-3">
                     <a href="#" class="d-inline-block">
@@ -19,7 +19,7 @@
                 <h4 class="section-title ff-secondary text-start fw-normal mb-4">Contact Us</h4>
                 {{-- <p class="mb-2"><span class="fa fa-map-marker-alt me-3"></span>123 Street, New York, USA</p>
                 <p class="mb-2"><span class="fa fa-phone-alt me-3"></span>+012 345 67890</p> --}}
-                <p class="mb-2"><a href="mailto:contact@sugarpapi.com" class="text-dark"><span class="fa fa-envelope me-3"></span>contact@sugarpapi.com</a></p>
+                <p class="mb-2"><a href="mailto:contact@sugarpappi.com" class="text-dark"><span class="fa fa-envelope me-3"></span>contact@sugarpappi.com</a></p>
                 <div class="d-flex pt-2">
                     {{-- <a class="btn btn-outline-light btn-social" href=""><span class="fab fa-twitter"></span></a> --}}
                     <a class="btn btn-outline-light btn-social" href=""><span
@@ -39,10 +39,8 @@
                 <div class="position-relative mx-auto" style="max-width: 400px;">
                     <input class="form-control border-primary w-100 py-3 ps-4 footer-email-box" type="text"
                         placeholder="Your email">
-                    {{-- <button type="button"
-                    id="signupButton" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button> --}}
                     <button type="button"
-                    id="" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    id="signupButton" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                 </div>
             </div>
         </div>
@@ -51,7 +49,7 @@
         <div class="copyright">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0 text-dark"><span>Sugar Papi &copy;
+                    <p class="mb-0 text-dark"><span>Sugar Pappi &copy;
                             <script>
                                 document.write(new Date().getFullYear());
                             </script>
@@ -59,13 +57,10 @@
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <div class="footer-menu">
-                        {{-- <a type="button" data-bs-toggle="modal" data-bs-target="#disclaimerModal">Disclaimer</a>
+                        {{-- <a type="button" data-bs-toggle="modal" data-bs-target="#disclaimerModal">Disclaimer</a> --}}
                         <a href="{{route('privacy-policy')}}">Privacy Policy</a>
-                        <a href="{{route('terms-conditions')}}">Terms & Condition</a>
-                        <a href="{{route('getcontact')}}">Help</a> --}}
-                        <a href="">Privacy Policy</a>
-                        <a href="">Terms & Conditions</a>
-                        <a href="">Contact Us</a>
+                        <a href="{{route('terms-conditions')}}">Terms & Conditions</a>
+                        <a href="{{route('getcontact')}}">Contact Us</a>
                         <a href="{{route('get-faqs')}}">FAQ's</a>
                     </div>
                 </div>

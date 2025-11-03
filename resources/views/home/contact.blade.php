@@ -3,22 +3,12 @@
 @section('content')
 <section class="section">
     <div class="container-xxl bg-white p-0">
-        <div class="container-xxl position-relative p-0">
-
-            <div class="container-xxl py-5 bg-dark hero-header mb-5">
-                <div class="container text-center my-lg-5 pt-lg-5 pb-lg-4">
-                    <h1 class="mb-0 display-3 text-white animated slideInDown">Contact Us</h1>
-                </div>
-            </div>
-        </div>
-        <!-- Navbar & Hero End -->
-
         <!-- Contact Start -->
         <div class="container-xxl py-5">
-            <div class="p-xl-5 p-4 col-sm-8 col-11 mx-auto bg-dark">
+            <div class="p-xl-5 p-4 col-sm-8 col-11 mx-auto bg-primary">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Contact Us</h5>
-                    <h1 class="mb-xl-5 mb-4 text-white">Contact For Any Query</h1>
+                    <h5 class="section-title ff-secondary text-center text-dark fw-normal">Contact Us</h5>
+                    <h1 class="mb-xl-5 mb-4 text-dark">Contact For Any Query</h1>
                 </div>
                 <div class="wow fadeInUp" data-wow-delay="0.2s">
                     <form action="{{route('sendMail')}}" method="POST" enctype="multipart/form-data">

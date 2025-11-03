@@ -5,10 +5,10 @@
         <!-- Reset Password Start -->
         <div class="container-xxl py-5 pb-lg-5 pb-0 px-0 wow fadeInUp" data-wow-delay="0.1s">
             <div class="row g-0">
-                <div class="col-xl-6 col-sm-8 col-11 mx-auto bg-dark d-flex align-items-center">
-                    <div class="w-100 p-xl-5 p-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="col-xl-6 col-sm-8 col-11 mx-auto bg-primary d-flex align-items-center">
+                    <div class="w-100 p-xl-5 p-4 wow fadeInUp light-box-shadow" data-wow-delay="0.2s">
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reset Password</h5>
-                        <h1 class="text-white mb-4">Retrieve Your Password</h1>
+                        <h1 class="text-dark mb-4">Retrieve Your Password</h1>
                         @if (session()->has('message'))
                             <div class="alert alert-{{ session('alert') }}">
                             </div>
