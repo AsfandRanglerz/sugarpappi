@@ -111,9 +111,9 @@
     </style>
     <section class="section">
         <div class="container-xxl position-relative p-0">
-            <div class="container-xxl py-5 bg-dark hero-header mb-md-5 mb-3">
+            <div class="container-xxl py-5 bg-primary hero-header mb-md-5 mb-3">
                 <div class="container text-center my-lg-5 pt-lg-5 pb-lg-4">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Checkout</h1>
+                    <h1 class="display-3 text-dark mb-3 animated slideInDown">Checkout</h1>
                 </div>
             </div>
         </div>
@@ -300,22 +300,22 @@
                                 <!-- Subtotal -->
                                 <div class="d-flex justify-content-between">
                                     <p class="text-muted">Sub Total</p>
-                                    <p class="sub-total">${{ number_format($subtotal, 2) }}</p>
+                                    <p class="sub-total">£{{ number_format($subtotal, 2) }}</p>
                                 </div>
                                 <!-- Estimated taxes -->
                                 <div class="d-flex justify-content-between">
                                     <p class="text-muted">Estimated taxes (New York)</p>
-                                    <p class="tax-value">${{ number_format($tax, 2) }}</p>
+                                    <p class="tax-value">£{{ number_format($tax, 2) }}</p>
                                 </div>
                                 <!-- Tip -->
                                 <div class="d-flex justify-content-between">
                                     <p class="text-muted">Tip</p>
-                                    <p class="tip-value">${{ number_format($tip, 2) }}</p>
+                                    <p class="tip-value">£{{ number_format($tip, 2) }}</p>
                                 </div>
                                 <!-- Estimated order total -->
                                 <div class="d-flex justify-content-between">
                                     <p class="text-muted">Estimated order total</p>
-                                    <p class="total-value">${{ number_format($orderTotal, 2) }}</p>
+                                    <p class="total-value">£{{ number_format($orderTotal, 2) }}</p>
                                 </div>
                             </div>
                             <p>Additional taxes and fees will be calculated at checkout</p>
