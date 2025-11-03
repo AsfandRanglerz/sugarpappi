@@ -121,7 +121,7 @@
                           @if ($notifications->isEmpty())
                               <div class="card">
                                   <div class="card-body text-center">
-                                      <a href="#">No Result Found!</a>
+				      <p class="text-danger text-center">No Result Found!</p>
                                   </div>
                               </div>
                           @else
@@ -201,7 +201,7 @@
                               </div>
                           </div>
                       @empty
-                          <p class="text-danger text-center">Your cart is empty.</p>
+                          <p class="text-danger text-center">Your cart is empty!</p>
                       @endforelse
                   </div>
                   <div class="pt-3 border-top mt-1 text-center">
