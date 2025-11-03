@@ -121,7 +121,7 @@
                           @if ($notifications->isEmpty())
                               <div class="card">
                                   <div class="card-body text-center">
-                                      <a href="#">No Result Found!</a>
+				      <p class="text-danger text-center">No Result Found!</p>
                                   </div>
                               </div>
                           @else
@@ -159,7 +159,7 @@
                                   <div class="d-flex cart-input-parent justify-content-between">
                                       <h6 class="m-0">{{ $item['name'] }} <span style="font-size:12px">{{ $item['size'] ? '(' . $item['size'] . ')' : '' }}</span></h6>
                                       <h6 class="m-0 total-price">
-                                          ${{ floatval($item['price']) * intval($item['quantity']) }}</h6>
+                                          £{{ floatval($item['price']) * intval($item['quantity']) }}</h6>
                                       <p class="product-price d-none">{{ floatval($item['price']) }}</p>
                                   </div>
 
@@ -201,7 +201,7 @@
                               </div>
                           </div>
                       @empty
-                          <p class="text-danger text-center">Your cart is empty.</p>
+                          <p class="text-danger text-center">Your cart is empty!</p>
                       @endforelse
                   </div>
                   <div class="pt-3 border-top mt-1 text-center">
