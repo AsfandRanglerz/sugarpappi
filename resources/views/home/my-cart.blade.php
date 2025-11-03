@@ -647,23 +647,23 @@
                                 @if ($firstItem)
                                     <div class="d-flex justify-content-between">
                                         <p class="text-muted">Sub Total</p>
-                                        <p class="sub-total">${{ $firstItem['price'] }}</p>
+                                        <p class="sub-total">£{{ $firstItem['price'] }}</p>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         @foreach ($branchess as $index => $branch)
                                         @if ($branch->status == 1)
                                         <p class="text-muted">Estimated taxes (New York)</p>
-                                        <p class="tax-value">${{$branch->tax}}</p>
+                                        <p class="tax-value">£{{$branch->tax}}</p>
                                         @endif
                                     @endforeach
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <p class="text-muted">Tip</p>
-                                        <p class="tip-value">$0</p>
+                                        <p class="tip-value">£0</p>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <p class="text-muted">Estimated order total</p>
-                                        <p class="total-value">${{ floatval($firstItem['price']) + $branch->tax }}</p>
+                                        <p class="total-value">£{{ floatval($firstItem['price']) + $branch->tax }}</p>
                                     </div>
                                 @else
                                     <p class="text-danger text-center">Your cart is empty.</p>

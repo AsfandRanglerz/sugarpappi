@@ -159,7 +159,7 @@
                                   <div class="d-flex cart-input-parent justify-content-between">
                                       <h6 class="m-0">{{ $item['name'] }} <span style="font-size:12px">{{ $item['size'] ? '(' . $item['size'] . ')' : '' }}</span></h6>
                                       <h6 class="m-0 total-price">
-                                          ${{ floatval($item['price']) * intval($item['quantity']) }}</h6>
+                                          £{{ floatval($item['price']) * intval($item['quantity']) }}</h6>
                                       <p class="product-price d-none">{{ floatval($item['price']) }}</p>
                                   </div>
 
