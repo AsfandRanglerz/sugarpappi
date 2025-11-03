@@ -257,7 +257,7 @@
                                 <span class="small"><span class="separator">•</span> Coffee & Tea</span>
                                 <span class="small"><span class="separator">•</span> Steak & Cheese Sandwich</span>
                                 <span class="small"><span class="separator">•</span> Tea & Coffee</span>
-                                <p class="mb-0 small">Min order value for this shop is €12</p>
+                                <p class="mb-0 small">Min order value for this shop is £12</p>
                                 @if ($timeSlots->isNotEmpty())
                                     <p class="mb-0 small">
                                         Timing:
@@ -318,7 +318,7 @@
                                         aria-labelledby="pillsPickupTab" tabindex="0">
                                         <div class="delivery-table">
                                             <div class="delivery-col">
-                                                <p class="title">$0.00</p>
+                                                <p class="title">£0.00</p>
                                                 <a href="#">Other Fees</a>
                                             </div>
 
@@ -1298,7 +1298,7 @@
                 html += '<h6 class="m-0" data-product-id="' + product.product_id + '">' + product.name;
                 // Check if size exists and wrap it in a span within parentheses
                 html += product.size ? ' (<span style="font-size: 12px;">' + product.size + '</span>)' : '';
-                html += '</h6><h6 class="m-0 total-price">$' + ((parseFloat(product.price) * product.quantity)
+                html += '</h6><h6 class="m-0 total-price">£' + ((parseFloat(product.price) * product.quantity)
                         .toFixed(2)) +
                     '</h6><p class="product-price d-none">' + product.price + '</p></div>';
                 html += '<div class="mb-2"><h6 class="m-0">Toppings</h6>';

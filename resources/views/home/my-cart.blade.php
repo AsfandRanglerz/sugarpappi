@@ -539,11 +539,11 @@
                             @endforelse
                         </div>
                         <div>
-                            <div class>
+                            {{-- <div class>
                                 <a href="{{ route('get-our-menu') }}" class="add_more py-2 rounded">
                                     Add More
                                 </a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <!-- Cart Part End -->
@@ -704,7 +704,7 @@
                     let branchLoc = $(this).siblings('.branch-location-parent').find(
                         '.branch-location').text();
                     let tax=$(this).siblings('.branch-location-parent').find('.tax-price').val();
-                    $('.tax-value').text('$'+tax);
+                    $('.tax-value').text('£'+tax);
                     Total();
                     $('.branch-pickup').each(function() {
                         $(this).text(branchLoc);
@@ -800,7 +800,7 @@
             if ($(this).val() < 0) {
                 $(this).val(0)
             }
-            $('.tip-value').text('$' + $(this).val());
+            $('.tip-value').text('£' + $(this).val());
             Total();
         });
         $('.minus-btn').each(function() {
@@ -837,10 +837,10 @@
                 sum = parseFloat(sum.toFixed(2));
             });
             $('.order-items').text(a);
-            $('.sub-total').text('$' + sum);
+            $('.sub-total').text('£' + sum);
             let tipValue = Number($('.tip-value').text().slice(1));
             let tax = Number($('.tax-value').text().slice(1));
-            $('.total-value').text('$' + (tipValue + tax + sum).toFixed(2));
+            $('.total-value').text('£' + (tipValue + tax + sum).toFixed(2));
             $('.order-input').text(count);
         }
 
@@ -897,10 +897,10 @@
             $('.cart-counter-1').each(function() {
                 $(this).text(bb);
             })
-            $('.sub-total').text('$' + sum);
+            $('.sub-total').text('£' + sum);
             let tipValue = Number($('.tip-value').text().slice(1));
             let tax = Number($('.tax-value').text().slice(1));
-            $('.total-value').text('$' + (tipValue + tax + sum).toFixed(2));
+            $('.total-value').text('£' + (tipValue + tax + sum).toFixed(2));
             $('.order-input').text(count);
         })
     });

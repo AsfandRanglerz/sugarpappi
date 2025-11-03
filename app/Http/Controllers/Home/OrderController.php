@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use Log;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Branch;
@@ -398,15 +399,15 @@ class OrderController extends Controller
 
             // ✅ Email notification
             $orderCode = $order->code;
-            Mail::to($user->email)->send(new OrderConfirm($orderCode));
+            // Mail::to($user->email)->send(new OrderConfirm($orderCode));
 
             // ✅ Clear session
-    session()->forget('cart');
-    session()->forget('tip_amount');
-    session()->forget('vehicle_color');
-    session()->forget('vehicle_number');
-    session()->forget('time');
-    session()->forget('start_time'); 
+            session()->forget('cart');
+            session()->forget('tip_amount');
+            session()->forget('vehicle_color');
+            session()->forget('vehicle_number');
+            session()->forget('time');
+            session()->forget('start_time'); 
 
             return redirect()->route('my-order')->with(['status' => true, 'message' => 'Order placed successfully! Payment will be handled manually.']);
         } catch (\Exception $e) {
