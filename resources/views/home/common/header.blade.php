@@ -93,7 +93,7 @@
               <a href="{{ route('index') }}"
                   class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
               <a href="{{ route('get-our-gallery') }}"
-                  class="nav-item nav-link {{ request()->is('get-our-gallery') ? 'active' : '' }}">EXPLORE Sugar Papi GALLERY</a>
+                  class="nav-item nav-link {{ request()->is('get-our-gallery') ? 'active' : '' }}">EXPLORE Sugar Pappi GALLERY</a>
               {{-- <a href="{{ route('get-new-sea-moss') }}"
                   class="nav-item nav-link {{ request()->is('get-new-sea-moss') ? 'active' : '' }}">Guide Video</a> --}}
               {{-- <a href="{{ route('get-our-menu') }}" class="nav-item nav-link {{ request()->is('get-our-menu') ? 'active' : '' }}">ORDER ONLINE</a> --}}
@@ -233,13 +233,6 @@
   </div>
   <!-- Overlay Search End -->
 
-  @if (request()->is('login') ||
-          request()->is('getRegistor') ||
-          request()->is('user/my-profile') ||
-          request()->is('forgot-password') ||
-          Str::contains(request()->url(), 'userChange_password'))
-      <div class="d-lg-block d-none container-xxl py-5 bg-dark hero-header mb-5"></div>
-  @endif
   <!-- Navbar & Hero End -->
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>

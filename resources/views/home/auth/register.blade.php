@@ -4,10 +4,10 @@
     <section class="section">
         <div class="container-xxl py-5 pb-lg-5 pb-0 px-0 wow fadeInUp" data-wow-delay="0.1s">
             <div class="row g-0">
-                <div class="col-xl-6 col-sm-8 col-11 mx-auto bg-dark d-flex align-items-center">
-                    <div class="p-xl-5 p-4 wow fadeInUp" data-wow-delay="0.2s">
-                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Sign Up</h5>
-                        <h1 class="text-white mb-4">Your Nutrition & Smoothie Adventure Begins Here</h1>
+                <div class="col-xl-6 col-sm-8 col-11 mx-auto bg-primary d-flex align-items-center">
+                    <div class="p-xl-5 p-4 wow fadeInUp light-box-shadow" data-wow-delay="0.2s">
+                        <h5 class="section-title ff-secondary text-start text-dark fw-normal">Sign Up</h5>
+                        <h1 class="text-dark mb-4">Join the Sugar Pappi family — where flavor meets fun!</h1>
 
                         <form method="POST" action="{{ route('registerUser') }}">
                             @csrf
@@ -62,9 +62,9 @@
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="submit">Sign Up</button>
-                                    <small class="mt-2 d-block text-danger">(Note: Please check your Spam/Junk folder in case the email is not received in the inbox. If it's not there as well, please contact us at aznutritionnj@gmail.com)</small>
-                                    <h5 class="text-white text-center mt-4 mb-0">Already have an account? <a
-                                            href="{{ route('login') }}">Login</a></h5>
+                                    <small class="mt-2 d-block text-danger">(Note: Please check your Spam/Junk folder in case the email is not received in the inbox. If it's not there as well, please contact us at contact@sugarpappi.com)</small>
+                                    <h5 class="text-dark text-center mt-4 mb-0">Already have an account? <a
+                                            href="{{ route('login') }}" class="text-dark">Login</a></h5>
                                 </div>
                             </div>
                         </form>

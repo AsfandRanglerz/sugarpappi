@@ -268,7 +268,7 @@
                                 @endif
                                 <p class="mb-0 small">Aldow Industrial Estate, Pod 10, Unit D, Jacuna Kitchen,
                                     Ardwick,, Manchester, EMEA M12 6AE</p>
-                                <p class="small text-dark">Sugar Papi in Chorltonne upon Medlock, Manchester, is a dessert
+                                <p class="small text-dark">Sugar Pappi in Chorltonne upon Medlock, Manchester, is a dessert
                                     spot that
                                     enjoys a high
                                     customer rating of 4.8. The menu features an array of hot desserts such as Sticky Toffee
@@ -567,7 +567,7 @@
                                 style="border:0;" allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade"></iframe>
                             <div class="p-3">
-                                <h6 class="mb-3 locationHeading">Sugar Papi</h6>
+                                <h6 class="mb-3 locationHeading">Sugar Pappi</h6>
                                 <p class="m-0 address1"></p>
                                 <ul>
                                     @if ($userTimeSlots)
@@ -703,7 +703,7 @@
                     <div class="text-center">
                     @if ($timeSlots->isNotEmpty())
                         <h5 class="section-title ff-secondary fw-normal m-0">
-                            {{ \Carbon\Carbon::parse($timeSlots->first()->start_pickup_time)->format('g:i A') }} – 
+                            {{ \Carbon\Carbon::parse($timeSlots->first()->start_pickup_time)->format('g:i A') }} –
                             {{ \Carbon\Carbon::parse($timeSlots->first()->end_pickup_time)->format('g:i A') }}
                         </h5>
                     @endif
@@ -1057,19 +1057,19 @@
             //array to store the Google Map Location
             let arr = [{
                 source: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3018.0477543418483!2d-73.84479512475968!3d40.84887532922607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2f4ab4f07396d%3A0xe6c4ae3a2866d1b8!2sA%20Z%20Nutrition!5e0!3m2!1sen!2s!4v1700484957680!5m2!1sen!2s",
-                locationHeading: 'Sugar Papi',
+                locationHeading: 'Sugar Pappi',
                 address1: '1578 Main Avenue Clifton, NJ 07011'
             }, {
                 source: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.8769358092172!2d-73.82903412475196!3d40.98417552090991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2933bd5635a09%3A0x502bc89c049525ac!2s2562%20Central%20Park%20Ave%2C%20Yonkers%2C%20NY%2010710%2C%20USA!5e0!3m2!1sen!2s!4v1700483134249!5m2!1sen!2s",
-                locationHeading: 'Sugar Papi',
+                locationHeading: 'Sugar Pappi',
                 address1: '2562 Central Park Av yonkers, NY 10710'
             }, {
                 source: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3016.25629501146!2d-74.15504762475744!3d40.888192526811835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2fe99dc1b2ba9%3A0x84d65884be972356!2sA-Z%20Nutrition%26Smoothies!5e0!3m2!1sen!2s!4v1700485074231!5m2!1sen!2s",
-                locationHeading: 'Sugar Papi',
+                locationHeading: 'Sugar Pappi',
                 address1: '1776 Eastchester Road Bronx, NY 10461'
             }, {
                 source: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96659.29314183394!2d-74.34112495664061!3d40.79274319999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25566ba35d8cb%3A0x2cb13edad59b0cbc!2sAmazon%20Hub%20Counter%20-%20A-Z%20Nutrition%20%26%20Smoothies!5e0!3m2!1sen!2s!4v1700485211429!5m2!1sen!2s",
-                locationHeading: 'Sugar Papi',
+                locationHeading: 'Sugar Pappi',
                 address1: '549 Bloomfield Avenue Bloomfield, NJ 07003'
             }, ];
 

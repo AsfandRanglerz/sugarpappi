@@ -68,7 +68,7 @@
             border-radius: 100px;
             text-align: center;
             background: var(--primary);
-            color: #FFF;
+            color: #000;
             font-size: 12px;
             margin-right: 8px;
         }
@@ -88,9 +88,9 @@
     </style>
     <section class="section">
         <div class="container-xxl position-relative p-0">
-            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+            <div class="container-xxl py-5 bg-primary hero-header mb-5">
                 <div class="container text-center my-lg-5 pt-lg-5 pb-lg-4">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">FAQ's</h1>
+                    <h1 class="display-3 text-dark mb-3 animated slideInDown">FAQ's</h1>
                 </div>
             </div>
         </div>
