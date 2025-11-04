@@ -10,7 +10,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="col-12">
-                                    <h4>Add Time Slots</h4>
+                                    <h4>Time Slot</h4>
                                 </div>
                             </div>
                             <div class="card-body">
