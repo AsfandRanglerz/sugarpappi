@@ -380,10 +380,11 @@
                                         <h6 class="">How to get it</h6>
                                         <h6 class="text-danger">Required</h6>
                                     </div>
-                                        {{-- <div class="form-check">
-                                            <input class="mt-0 loc-input form-check-input" type="radio" checked
-                                                id="location-1" name="location">
-                                        </div> --}}
+                                    
+                                        <div class="form-check">
+                                            {{-- <input class="mt-0 loc-input form-check-input" type="radio" checked
+                                                id="location-1" name="location"> --}}
+                                        </div>
                                         {{-- <label for="location-1" class="ms-1" style="cursor: pointer">
                                          <p class="small h6">Store Pickup</p> --}}
 
@@ -441,6 +442,7 @@
                                         data-bs-target="#locationModal">Choose different
                                         location</a></h6> --}}
                                         {{-- </label> --}}
+                                    
                                 </div>
                                 <!-- Location End -->
 
@@ -924,6 +926,7 @@
                                                 <h6 class="">How to get it</h6>
                                                 <h6 class="text-danger">Required</h6>
                                             </div>
+                                            
                                                 @foreach ($branches as $index => $branch)
                                                     @if ($branch->status == 1)
                                                         <div class="branch-option mb-3">
@@ -1087,24 +1090,6 @@
             toastr.success('{{ \Illuminate\Support\Facades\Session::get('message') }}');
         </script>
     @endif
-    <script>
-function toggleDelivery(productId, branchId) {
-    const pickupRadio = document.getElementById(`pickupStatus${productId}_${branchId}`);
-    const homeRadio = document.getElementById(`homeStatus${productId}_${branchId}`);
-    const pickupSection = document.getElementById(`storePickupSection${productId}_${branchId}`);
-    const deliveryField = document.getElementById(`deliveryAddressField${productId}_${branchId}`);
-
-    if (homeRadio.checked) {
-        pickupSection.style.display = 'none';
-        deliveryField.style.display = 'block';
-    } else if (pickupRadio.checked) {
-        pickupSection.style.display = 'block';
-        deliveryField.style.display = 'none';
-        deliveryField.querySelector('input').value = '';
-    }
-}
-</script>
-
     <script>
         $(function() {
             $(document).on('change', '.select-size', function() {
@@ -1523,6 +1508,23 @@ function toggleDelivery(productId, branchId) {
         });
     </script>
 
+<script>
+function toggleDelivery(productId, branchId) {
+    const pickupRadio = document.getElementById(`pickupStatus${productId}_${branchId}`);
+    const homeRadio = document.getElementById(`homeStatus${productId}_${branchId}`);
+    const pickupSection = document.getElementById(`storePickupSection${productId}_${branchId}`);
+    const deliveryField = document.getElementById(`deliveryAddressField${productId}_${branchId}`);
+
+    if (homeRadio.checked) {
+        pickupSection.style.display = 'none';
+        deliveryField.style.display = 'block';
+    } else if (pickupRadio.checked) {
+        pickupSection.style.display = 'block';
+        deliveryField.style.display = 'none';
+        deliveryField.querySelector('input').value = '';
+    }
+}
+</script>
 
 
 

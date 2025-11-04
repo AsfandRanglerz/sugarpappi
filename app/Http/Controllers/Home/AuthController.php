@@ -112,7 +112,7 @@ class AuthController extends Controller
 
         $request->validate([
             'email' => 'required|exists:users,email',
-            'g-recaptcha-response' => 'required',
+            // 'g-recaptcha-response' => 'required',
         ]);
         $exists = DB::table('password_resets')->where('email', $request->email)->first();
         if ($exists) {
