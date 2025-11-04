@@ -380,11 +380,10 @@
                                         <h6 class="">How to get it</h6>
                                         <h6 class="text-danger">Required</h6>
                                     </div>
-                                    <div class="d-flex align-items-start">
-                                        <div class="form-check">
-                                            {{-- <input class="mt-0 loc-input form-check-input" type="radio" checked
-                                                id="location-1" name="location"> --}}
-                                        </div>
+                                        {{-- <div class="form-check">
+                                            <input class="mt-0 loc-input form-check-input" type="radio" checked
+                                                id="location-1" name="location">
+                                        </div> --}}
                                         {{-- <label for="location-1" class="ms-1" style="cursor: pointer">
                                          <p class="small h6">Store Pickup</p> --}}
 
@@ -442,7 +441,6 @@
                                         data-bs-target="#locationModal">Choose different
                                         location</a></h6> --}}
                                         {{-- </label> --}}
-                                    </div>
                                 </div>
                                 <!-- Location End -->
 
@@ -926,7 +924,6 @@
                                                 <h6 class="">How to get it</h6>
                                                 <h6 class="text-danger">Required</h6>
                                             </div>
-                                            <div class="d-flex align-items-start">
                                                 @foreach ($branches as $index => $branch)
                                                     @if ($branch->status == 1)
                                                         <div class="branch-option mb-3">
@@ -975,7 +972,7 @@
                                                         </div>
                                                     @endif
                                                 @endforeach
-                                            </div>
+                                            
                                         </div>
                                         <!-- Location End -->
 

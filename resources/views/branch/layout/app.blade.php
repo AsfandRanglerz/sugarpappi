@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('public/admin/assets/css/selectric.css') }}">
     <link rel="stylesheet" href="{{ asset('public/admin/assets/css/custom.css') }}">
     <!-- Favicon -->
-    <link href="{{ asset('public/img/az-logo.png') }}" rel="icon">
+    <link href="{{ asset('public/img/logo.png') }}" rel="icon">
     <link rel="stylesheet" href="{{ asset('public/admin/assets/css/datatables.css') }}">
     <link rel="stylesheet"
         href="{{ asset('public/admin/assets/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
