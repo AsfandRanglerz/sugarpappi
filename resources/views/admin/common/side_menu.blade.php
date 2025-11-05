@@ -74,7 +74,7 @@
             </li>
             <li class="dropdown {{ request()->is('admin/time-slots*') ? 'active' : '' }}">
                 <a href="{{ route('time-slot.index') }}" class="nav-link">
-                    <i class="fas fa-clock"></i><span>Time Slots</span></a>
+                    <i class="fas fa-clock"></i><span>Time Slot</span></a>
             </li>
             </li>
 
