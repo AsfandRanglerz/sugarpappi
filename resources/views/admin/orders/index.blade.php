@@ -36,6 +36,7 @@
                                         <th>After Redeemed</th>
                                         <th>Redeemed</th>
                                         <th>Status</th>
+                                        <th>Change Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -239,7 +240,28 @@
                                             <div class="badge p-2 badge-success badge-shadow">Delivered</div>
                                             @endif
                                         </td>
-
+                                           <td>
+                                            <div class="dropdown">
+                                                <form
+                                                    action="{{ route('update-order-status', ['orderId' => $order->id]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    <select class="form-select" name="status"
+                                                        aria-label="Default select example"
+                                                        onchange="this.form.submit()">
+                                                        <option value="Pending" {{ $order->status === 'Pending' ?
+                                                            'selected' : '' }}>
+                                                            Pending</option>
+                                                        <option value="Order Ready" {{ $order->status === 'Order Ready'
+                                                            ? 'selected' : '' }}>
+                                                            Order ready</option>
+                                                        <option value="Delivered" {{ $order->status === 'Delivered' ?
+                                                            'selected' : '' }}>
+                                                            Delivered</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
