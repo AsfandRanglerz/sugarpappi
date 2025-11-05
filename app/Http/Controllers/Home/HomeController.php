@@ -113,6 +113,34 @@ class HomeController extends Controller
         return view('home.our-menu', compact('products', 'branches', 'timeSlots', 'searchTerm', 'userTimeSlots'));
     }
 
+    public function searchProduct(Request $request)
+    {
+         $user = Auth::user();
+
+        $products = Product::with('variants')
+            ->where('status', 1)
+            ->where('is_featured', 1) 
+            ->orderBy('id', 'DESC')
+            // ->take(4)
+            ->get();
+        
+        // Get all menu categories with products for full menu display
+        $menuCategories = Menu::with(['products' => function ($query) {
+            $query->where('status', 1);
+        }])->orderBy('id', 'asc')->get();
+        
+        foreach ($menuCategories as $menu) {
+            $menuproduct = Product::where('menu_id', $menu->id)->where('status', 1)->with('variants')->get();
+            $menu->product = $menuproduct;
+        }
+    
+        
+        $branches = Branch::all();
+        $userId = Auth::guard('user')->id();
+        
+        return view('home.searchproduct', compact('products', 'branches', 'timeSlots', 'menuGalleries', 'userTimeSlots', 'menuCategories', 'faqs'));
+    }
+
     public function sendMail(Request $request)
     {
         $request->validate([

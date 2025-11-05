@@ -927,54 +927,64 @@
                                                 <h6 class="text-danger">Required</h6>
                                             </div>
                                             
-                                                @foreach ($branches as $index => $branch)
-                                                    @if ($branch->status == 1)
-                                                        <div class="branch-option mb-3">
-                                                            <input type="hidden" name="branch_id" value="{{ $branch->id }}">
+                                               @foreach ($branches as $index => $branch)
+                                                @if ($branch->status == 1)
+                                                    <div class="branch-option mb-3">
+                                                        <input type="hidden" name="branch_id" value="{{ $branch->id }}">
 
-                                                            {{-- Store Pickup Option --}}
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" 
-                                                                    type="radio" 
-                                                                    name="status_{{ $prod->id }}"
-                                                                    id="pickupStatus{{ $prod->id }}_{{ $branch->id }}" 
-                                                                    value="1" 
-                                                                    checked 
-                                                                    onchange="toggleDelivery('{{ $prod->id }}', '{{ $branch->id }}')">
-                                                                <label class="form-check-label fw-bold small" for="pickupStatus{{ $prod->id }}_{{ $branch->id }}">
-                                                                    Store Pickup
-                                                                </label>
-                                                            </div>
+                                                        {{-- Store Pickup --}}
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" 
+                                                                type="radio" 
+                                                                name="status_{{ $prod->id }}" 
+                                                                id="pickupStatus{{ $prod->id }}_{{ $branch->id }}_{{ $index }}" 
+                                                                value="1"
+                                                                checked
+                                                                onchange="toggleDelivery('{{ $prod->id }}', '{{ $branch->id }}_{{ $index }}')">
 
-                                                            {{-- Store Pickup Address --}}
-                                                            <p class="small fw-bold m-0 sel-location mt-1" id="storePickupSection{{ $prod->id }}_{{ $branch->id }}">
-                                                                <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($branch->location) }}" 
-                                                                target="_blank" 
-                                                                style="text-decoration: none; color: inherit;">
-                                                                    {{ $branch->location }}
-                                                                </a>
-                                                            </p>
-
-                                                            {{-- Home Delivery Option --}}
-                                                            <div class="form-check mt-3">
-                                                                <input class="form-check-input" 
-                                                                    type="radio" 
-                                                                    name="status_{{ $prod->id }}" 
-                                                                    id="homeStatus{{ $prod->id }}_{{ $branch->id }}" 
-                                                                    value="2" 
-                                                                    onchange="toggleDelivery('{{ $prod->id }}', '{{ $branch->id }}')">
-                                                                <label class="form-check-label fw-bold small" for="homeStatus{{ $prod->id }}_{{ $branch->id }}">
-                                                                    Home Delivery
-                                                                </label>
-                                                            </div>
-
-                                                            {{-- Delivery Address Input --}}
-                                                            <div id="deliveryAddressField{{ $prod->id }}_{{ $branch->id }}" class="mt-2" style="display: none;">
-                                                                <input type="text" name="delivery_address_{{ $prod->id }}" class="form-control" placeholder="Enter your delivery address">
-                                                            </div>
+                                                            <label class="form-check-label fw-bold small" 
+                                                                for="pickupStatus{{ $prod->id }}_{{ $branch->id }}_{{ $index }}">
+                                                                Store Pickup
+                                                            </label>
                                                         </div>
-                                                    @endif
-                                                @endforeach
+
+                                                        {{-- Pickup Address --}}
+                                                        <p class="small fw-bold m-0 sel-location mt-1" 
+                                                        id="storePickupSection{{ $prod->id }}_{{ $branch->id }}_{{ $index }}">
+                                                            <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($branch->location) }}" 
+                                                            target="_blank" 
+                                                            style="text-decoration: none; color: inherit;">
+                                                                {{ $branch->location }}
+                                                            </a>
+                                                        </p>
+
+                                                        {{-- Home Delivery --}}
+                                                        <div class="form-check mt-3">
+                                                            <input class="form-check-input" 
+                                                                type="radio" 
+                                                                name="status_{{ $prod->id }}" 
+                                                                id="homeStatus{{ $prod->id }}_{{ $branch->id }}_{{ $index }}" 
+                                                                value="2" 
+                                                                onchange="toggleDelivery('{{ $prod->id }}', '{{ $branch->id }}_{{ $index }}')">
+
+                                                            <label class="form-check-label fw-bold small" 
+                                                                for="homeStatus{{ $prod->id }}_{{ $branch->id }}_{{ $index }}">
+                                                                Home Delivery
+                                                            </label>
+                                                        </div>
+
+                                                        {{-- Delivery Address Input --}}
+                                                        <div id="deliveryAddressField{{ $prod->id }}_{{ $branch->id }}_{{ $index }}" 
+                                                            class="mt-2" style="display: none;">
+                                                            <input type="text" 
+                                                                name="delivery_address_{{ $prod->id }}" 
+                                                                class="form-control" 
+                                                                placeholder="Enter your delivery address">
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+
                                             
                                         </div>
                                         <!-- Location End -->
@@ -1215,40 +1225,40 @@
             });
         });
 
-        {{--  $('.addto-cart').on('click', function() {
-        var productId = $(this).closest('.food-modal').find('input[name="product_id"]').val();
-        var quantity = $(this).closest('.food-modal').find('input[name="quantity"]').val();
-        var isLocationChecked = $(this).closest('.food-modal').find('input[name="location"]:checked').length >
-            0;
-        var branchId = isLocationChecked ? $(this).closest('.food-modal').find('input[name="branch_id"]')
-            .val() : '';
-        var variantId = $(this).closest('.food-modal').find('select[name="variant_id"]').val().split(' ')[0]; // Get selected variant ID
-        var toppings = $(this).closest('.food-modal').find('input[name="toppings[]"]:checked').map(function() {
-            return $(this).val();
+    //      $('.addto-cart').on('click', function() {
+    //     var productId = $(this).closest('.food-modal').find('input[name="product_id"]').val();
+    //     var quantity = $(this).closest('.food-modal').find('input[name="quantity"]').val();
+    //     var isLocationChecked = $(this).closest('.food-modal').find('input[name="location"]:checked').length >
+    //         0;
+    //     var branchId = isLocationChecked ? $(this).closest('.food-modal').find('input[name="branch_id"]')
+    //         .val() : '';
+    //     var variantId = $(this).closest('.food-modal').find('select[name="variant_id"]').val().split(' ')[0]; // Get selected variant ID
+    //     var toppings = $(this).closest('.food-modal').find('input[name="toppings[]"]:checked').map(function() {
+    //         return $(this).val();
 
-        }).get();
+    //     }).get();
 
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('add.to.cart') }}',
-            data: {
-                '_token': '{{ csrf_token() }}',
-                'product_id': productId,
-                'quantity': quantity,
-                'branch_id': branchId,
-                'toppings': toppings,
-                'location': isLocationChecked,
-                'variant_id': variantId
-            },
-            success: function(data) {
-                toastr.success('Product Added To Cart Successfully!');
-                updateCartUI(data);
-            },
-            error: function(error) {
-                console.error('Error adding product to cart:', error);
-            }
-        });
-    });  --}}
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '{{ route('add.to.cart') }}',
+    //         data: {
+    //             '_token': '{{ csrf_token() }}',
+    //             'product_id': productId,
+    //             'quantity': quantity,
+    //             'branch_id': branchId,
+    //             'toppings': toppings,
+    //             'location': isLocationChecked,
+    //             'variant_id': variantId
+    //         },
+    //         success: function(data) {
+    //             toastr.success('Product Added To Cart Successfully!');
+    //             updateCartUI(data);
+    //         },
+    //         error: function(error) {
+    //             console.error('Error adding product to cart:', error);
+    //         }
+    //     });
+    // });  
 
         // last commit
         $('.addto-cart').on('click', function() {
@@ -1439,26 +1449,26 @@
 
         });
 
-        {{--  $('.sizeSelect').change(function () {
-        // Get the selected option
-        var selectedOption = $(this).find(':selected');
-        alert(selectedOption);
-        var selectedSize = selectedOption.data('size');
+    //     $('.sizeSelect').change(function () {
+    //     // Get the selected option
+    //     var selectedOption = $(this).find(':selected');
+    //     alert(selectedOption);
+    //     var selectedSize = selectedOption.data('size');
 
-        // Make an Ajax request to fetch the price
-        $.ajax({
-            url: '/get-price', // Change this to your Laravel route
-            type: 'GET',
-            data: { size: selectedSize },
-            success: function (data) {
-                // Update the price input field with the received data
-                $('#selSizePrice').val(data.price);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    });  --}}
+    //     // Make an Ajax request to fetch the price
+    //     $.ajax({
+    //         url: '/get-price', // Change this to your Laravel route
+    //         type: 'GET',
+    //         data: { size: selectedSize },
+    //         success: function (data) {
+    //             // Update the price input field with the received data
+    //             $('#selSizePrice').val(data.price);
+    //         },
+    //         error: function (error) {
+    //             console.log(error);
+    //         }
+    //     });
+    // });  
 
         // Menu Tabs Scrolling Function
         function scrollTabs(direction) {
@@ -1509,11 +1519,11 @@
     </script>
 
 <script>
-function toggleDelivery(productId, branchId) {
-    const pickupRadio = document.getElementById(`pickupStatus${productId}_${branchId}`);
-    const homeRadio = document.getElementById(`homeStatus${productId}_${branchId}`);
-    const pickupSection = document.getElementById(`storePickupSection${productId}_${branchId}`);
-    const deliveryField = document.getElementById(`deliveryAddressField${productId}_${branchId}`);
+function toggleDelivery(productId, branchUnique) {
+    const pickupRadio = document.getElementById(`pickupStatus${productId}_${branchUnique}`);
+    const homeRadio = document.getElementById(`homeStatus${productId}_${branchUnique}`);
+    const pickupSection = document.getElementById(`storePickupSection${productId}_${branchUnique}`);
+    const deliveryField = document.getElementById(`deliveryAddressField${productId}_${branchUnique}`);
 
     if (homeRadio.checked) {
         pickupSection.style.display = 'none';
@@ -1524,6 +1534,7 @@ function toggleDelivery(productId, branchId) {
         deliveryField.querySelector('input').value = '';
     }
 }
+
 </script>
 
 
