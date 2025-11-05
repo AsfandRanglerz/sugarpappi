@@ -17,7 +17,7 @@ class CartController extends Controller
 {
     public function myCart()
     {
-        // $carts = session('cart');
+        $carts = session('cart');
         $branchess = Branch::all();
         $userId = Auth::guard('user')->id();
         $userTimeSlots = UserTimeSlotes::where('user_id', $userId)
@@ -28,70 +28,107 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        $product = Product::with('variants')->findOrFail($request->product_id);
-        $branch = Branch::findOrFail($request->branch_id);
-        $toppingsByCategory = $request->toppings_by_category ?? [];
-        $cart = Session::get('cart', []);
-
-        if ($request->variant_id === null) {
-            $price = floatval(trim($product->price));
-        } else {
-            $variant = $product->variants->where('id', $request->variant_id)->first();
-            $price = floatval(trim($variant->price));
-            $size = $variant->size;
-        }
-
-        $cartKey = $request->product_id . '-' . ($request->variant_id ?? '');
-
-        if (isset($cart[$cartKey])) {
-            $cart[$cartKey]['quantity'] += $request->quantity;
-        } else {
-            $cart[$cartKey] = [
-                "product_id" => $product->id,
-                "variant_id" => (int)$request->variant_id,
-                "name" => $product->name,
-                "price" => $price,
-                "size" => $size ?? '',
-                "image" => $product->image,
-                "branch_id" => $request->branch_id,
-                "branch_name" => $branch->name,
-                "quantity" => (int)$request->quantity,
-                "toppings_by_category" => [], // Initialize toppings by category
-            ];
-
-            // Loop through each category and add toppings
-            foreach ($toppingsByCategory as $toppingCategory) {
-                $categoryId = $toppingCategory['category_id'];
-                $toppingIds = $toppingCategory['toppings'];
-
-                // Fetch existing toppings or initialize as an empty array
-                $existingToppings = $cart[$cartKey]['toppings_by_category'][$categoryId] ?? [];
-
-                // Merge new topping IDs with existing ones
-                $cart[$cartKey]['toppings_by_category'][$categoryId] = array_unique(array_merge($existingToppings, $toppingIds));
+        try {
+            $product = Product::with('variants')->findOrFail($request->product_id);
+            
+            // Find the branch if branch_id is provided, otherwise get the first active branch
+            if ($request->branch_id) {
+                $branch = Branch::where('id', $request->branch_id)->first();
+                if (!$branch) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Selected branch not found.'
+                    ], 404);
+                }
+            } else {
+                $branch = Branch::where('status', 1)->first();
+                if (!$branch) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'No active branch found.'
+                    ], 404);
+                }
             }
-            foreach ($toppingsByCategory as $toppingCategory) {
-                $categoryId = $toppingCategory['category_id'];
-                $toppingIds = $toppingCategory['toppings'];
-                $categoryName = Category::findOrFail($categoryId)->name;
+            
+            $toppingsByCategory = $request->toppings_by_category ?? [];
+            $cart = Session::get('cart', []);
 
-                // Fetch topping names
-                $toppingNames = Topping::whereIn('id', $toppingIds)->pluck('name')->toArray();
+            if ($request->variant_id === null) {
+                $price = floatval(trim($product->price));
+            } else {
+                $variant = $product->variants->where('id', $request->variant_id)->first();
+                $price = floatval(trim($variant->price));
+                $size = $variant->size;
+            }
 
-                // Fetch existing toppings or initialize as an empty array
-                $existingToppings = $cart[$cartKey]['toppings_by_category'][$categoryId] ?? [];
+            $cartKey = $request->product_id . '-' . ($request->variant_id ?? '');
 
-                // Merge new topping IDs with existing ones
-                $cart[$cartKey]['toppingsName_by_categoryName'][] = [
-                    'category_name' => $categoryName,
-                    'topping_names' => $toppingNames,
+            if (isset($cart[$cartKey])) {
+                $cart[$cartKey]['quantity'] += $request->quantity;
+            } else {
+                $cart[$cartKey] = [
+                    "product_id" => $product->id,
+                    "variant_id" => (int)$request->variant_id,
+                    "name" => $product->name,
+                    "price" => $price,
+                    "size" => $size ?? '',
+                    "image" => $product->image,
+                    "branch_id" => $branch->id,
+                    "branch_name" => $branch->name,
+                    "quantity" => (int)$request->quantity,
+                    "delivery_status" => $request->delivery_status,
+                    "delivery_address" => $request->delivery_address,
+                    'location' => $request->location ?? '', // ✅ store pickup/home delivery info
+                    "toppings_by_category" => [], // Initialize toppings by category
                 ];
-            }
-        }
 
-        Session::put('cart', $cart);
-        $data = count((array) session('cart'));
-        return response()->json(['success' => true, 'message' => 'Product added to cart successfully!', 'data' => $data, 'cart' => $cart]);
+                // Loop through each category and add toppings
+                foreach ($toppingsByCategory as $toppingCategory) {
+                    $categoryId = $toppingCategory['category_id'];
+                    $toppingIds = $toppingCategory['toppings'];
+
+                    // Fetch existing toppings or initialize as an empty array
+                    $existingToppings = $cart[$cartKey]['toppings_by_category'][$categoryId] ?? [];
+
+                    // Merge new topping IDs with existing ones
+                    $cart[$cartKey]['toppings_by_category'][$categoryId] = array_unique(array_merge($existingToppings, $toppingIds));
+                }
+
+                foreach ($toppingsByCategory as $toppingCategory) {
+                    $categoryId = $toppingCategory['category_id'];
+                    $toppingIds = $toppingCategory['toppings'];
+                    $categoryName = Category::findOrFail($categoryId)->name;
+
+                    // Fetch topping names
+                    $toppingNames = Topping::whereIn('id', $toppingIds)->pluck('name')->toArray();
+
+                    // Initialize toppingsName_by_categoryName if not set
+                    if (!isset($cart[$cartKey]['toppingsName_by_categoryName'])) {
+                        $cart[$cartKey]['toppingsName_by_categoryName'] = [];
+                    }
+
+                    // Add the new category and topping names
+                    $cart[$cartKey]['toppingsName_by_categoryName'][] = [
+                        'category_name' => $categoryName,
+                        'topping_names' => $toppingNames,
+                    ];
+                }
+            }
+
+            Session::put('cart', $cart);
+            $data = count((array) session('cart'));
+            return response()->json([
+                'success' => true,
+                'message' => 'Product added to cart successfully!',
+                'data' => $data,
+                'cart' => $cart
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error adding product to cart: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function remove(Request $request)

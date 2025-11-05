@@ -927,27 +927,54 @@
                                                 <h6 class="text-danger">Required</h6>
                                             </div>
                                             <div class="d-flex align-items-start">
-                                                <div class="form-check">
-                                                    <input class="mt-0 loc-input form-check-input" type="radio"
-                                                        checked id="location-full-{{ $prod->id }}"
-                                                        name="location">
-                                                </div>
-                                                <label for="location-full-{{ $prod->id }}" class="ms-1"
-                                                    style="cursor: pointer">
-                                                    <p class="small h6">Store Pickup</p>
-                                                    @foreach ($branches as $index => $branch)
-                                                        @if ($branch->status == 1)
-                                                            <input type="hidden" name="branch_id"
-                                                                value="{{ $branch->id }}">
-                                                            <p class="small fw-bold m-0">{{ $branch->name }}</p>
-                                                            <p class="small fw-bold m-0 sel-location">
-                                                                {{ $branch->location }}</p>
-                                                        @endif
-                                                    @endforeach
-                                                    <input type="hidden" id="orderLocation" name="address"
-                                                        value="2562 Central Park Av yonkers, NY">
-                                                    {{-- <h6 class="mt-2 mb-0 chose-location"><a href="#" data-bs-toggle="modal" data-bs-target="#locationModal">Choose different location</a></h6> --}}
-                                                </label>
+                                                @foreach ($branches as $index => $branch)
+                                                    @if ($branch->status == 1)
+                                                        <div class="branch-option mb-3">
+                                                            <input type="hidden" name="branch_id" value="{{ $branch->id }}">
+
+                                                            {{-- Store Pickup Option --}}
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" 
+                                                                    type="radio" 
+                                                                    name="status_{{ $prod->id }}"
+                                                                    id="pickupStatus{{ $prod->id }}_{{ $branch->id }}" 
+                                                                    value="1" 
+                                                                    checked 
+                                                                    onchange="toggleDelivery('{{ $prod->id }}', '{{ $branch->id }}')">
+                                                                <label class="form-check-label fw-bold small" for="pickupStatus{{ $prod->id }}_{{ $branch->id }}">
+                                                                    Store Pickup
+                                                                </label>
+                                                            </div>
+
+                                                            {{-- Store Pickup Address --}}
+                                                            <p class="small fw-bold m-0 sel-location mt-1" id="storePickupSection{{ $prod->id }}_{{ $branch->id }}">
+                                                                <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($branch->location) }}" 
+                                                                target="_blank" 
+                                                                style="text-decoration: none; color: inherit;">
+                                                                    {{ $branch->location }}
+                                                                </a>
+                                                            </p>
+
+                                                            {{-- Home Delivery Option --}}
+                                                            <div class="form-check mt-3">
+                                                                <input class="form-check-input" 
+                                                                    type="radio" 
+                                                                    name="status_{{ $prod->id }}" 
+                                                                    id="homeStatus{{ $prod->id }}_{{ $branch->id }}" 
+                                                                    value="2" 
+                                                                    onchange="toggleDelivery('{{ $prod->id }}', '{{ $branch->id }}')">
+                                                                <label class="form-check-label fw-bold small" for="homeStatus{{ $prod->id }}_{{ $branch->id }}">
+                                                                    Home Delivery
+                                                                </label>
+                                                            </div>
+
+                                                            {{-- Delivery Address Input --}}
+                                                            <div id="deliveryAddressField{{ $prod->id }}_{{ $branch->id }}" class="mt-2" style="display: none;">
+                                                                <input type="text" name="delivery_address_{{ $prod->id }}" class="form-control" placeholder="Enter your delivery address">
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
                                             </div>
                                         </div>
                                         <!-- Location End -->
@@ -1063,6 +1090,24 @@
             toastr.success('{{ \Illuminate\Support\Facades\Session::get('message') }}');
         </script>
     @endif
+    <script>
+function toggleDelivery(productId, branchId) {
+    const pickupRadio = document.getElementById(`pickupStatus${productId}_${branchId}`);
+    const homeRadio = document.getElementById(`homeStatus${productId}_${branchId}`);
+    const pickupSection = document.getElementById(`storePickupSection${productId}_${branchId}`);
+    const deliveryField = document.getElementById(`deliveryAddressField${productId}_${branchId}`);
+
+    if (homeRadio.checked) {
+        pickupSection.style.display = 'none';
+        deliveryField.style.display = 'block';
+    } else if (pickupRadio.checked) {
+        pickupSection.style.display = 'block';
+        deliveryField.style.display = 'none';
+        deliveryField.querySelector('input').value = '';
+    }
+}
+</script>
+
     <script>
         $(function() {
             $(document).on('change', '.select-size', function() {
@@ -1224,56 +1269,23 @@
     });  --}}
 
         // last commit
-        {{--  $('.addto-cart').on('click', function() {
-        var productId = $(this).closest('.food-modal').find('input[name="product_id"]').val();
-        var quantity = $(this).closest('.food-modal').find('input[name="quantity"]').val();
-        var isLocationChecked = $(this).closest('.food-modal').find('input[name="location"]:checked').length > 0;
-        var branchId = isLocationChecked ? $(this).closest('.food-modal').find('input[name="branch_id"]').val() : '';
-        var variantId = '';
-        var toppings = [];
-
-        // Check if the product has variants
-        var variantSelect = $(this).closest('.food-modal').find('select[name="variant_id"]');
-        if (variantSelect.length > 0) {
-            variantId = variantSelect.val().split(' ')[0];
-        }
-
-        // Get selected toppings if any
-        $(this).closest('.food-modal').find('input[name="toppings[]"]:checked').each(function() {
-            toppings.push($(this).val());
-        });
-
-        // Send AJAX request
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('add.to.cart') }}',
-            data: {
-                '_token': '{{ csrf_token() }}',
-                'product_id': productId,
-                'quantity': quantity,
-                'branch_id': branchId,
-                'toppings': toppings,
-                'location': isLocationChecked,
-                'variant_id': variantId
-            },
-            success: function(data) {
-                toastr.success('Product Added To Cart Successfully!');
-                updateCartUI(data);
-            },
-            error: function(error) {
-                console.error('Error adding product to cart:', error);
-            }
-        });
-    });  --}}
-
         $('.addto-cart').on('click', function() {
             var productId = $(this).closest('.food-modal').find('input[name="product_id"]').val();
             var quantity = $(this).closest('.food-modal').find('input[name="quantity"]').val();
-            var isLocationChecked = $(this).closest('.food-modal').find('input[name="location"]:checked').length >
-                0;
-            var branchId = isLocationChecked ? $(this).closest('.food-modal').find('input[name="branch_id"]')
-                .val() : '';
+            var isLocationChecked = $(this).closest('.food-modal').find('input[name="location"]:checked').length > 0;
+            var branchId = isLocationChecked ? $(this).closest('.food-modal').find('input[name="branch_id"]').val() : '';
             var variantId = '';
+
+            // Get delivery status and address
+            var deliveryStatus = $(this).closest('.food-modal').find('input[name="status_' + productId + '"]:checked').val();
+            var deliveryAddress = '';
+            if (deliveryStatus == '2') { // If home delivery
+                deliveryAddress = $(this).closest('.food-modal').find('input[name="delivery_address_' + productId + '"]').val();
+                if (!deliveryAddress) {
+                    toastr.error('Please enter delivery address');
+                    return;
+                }
+            }
 
             // Check if the product has variants
             var variantSelect = $(this).closest('.food-modal').find('select[name="variant_id"]');
@@ -1314,12 +1326,17 @@
                     'product_id': productId,
                     'quantity': quantity,
                     'branch_id': branchId,
-                    'toppings_by_category': toppingsArray, // Sending toppings by category in array format
+                    'toppings_by_category': toppingsArray,
                     'location': isLocationChecked,
-                    'variant_id': variantId
+                    'variant_id': variantId,
+                    'delivery_status': deliveryStatus,
+                    'delivery_address': deliveryAddress
                 },
                 success: function(data) {
                     toastr.success('Product Added To Cart Successfully!');
+                    // Update all cart counters in the header immediately
+                    $('.cart-counter-1').text(Object.keys(data.cart).length);
+                    // Update the cart UI
                     updateCartUI(data);
                 },
                 error: function(error) {
@@ -1334,45 +1351,48 @@
             var html = '';
             jQuery.each(data['cart'], function(i, product) {
                 cartItemCount += parseInt(product.quantity);
-                html += '<div class="carting-child px-3 mt-3 d-flex justify-content-between pb-3 border-bottom">';
+                html += '<div class="carting-child px-3 mt-3 d-flex justify-content-between pb-3 border-bottom" id="' + product.product_id + 'carted">';
                 html += '<img src="' + product.image +
-                    '" alt=""><div class="content"><div class="d-flex justify-content-between">';
-                html += '<h6 class="m-0" data-product-id="' + product.product_id + '">' + product.name;
+                    '" alt=""><div class="content"><div class="d-flex cart-input-parent justify-content-between">';
+                html += '<h6 class="m-0">' + product.name;
                 // Check if size exists and wrap it in a span within parentheses
                 html += product.size ? ' (<span style="font-size: 12px;">' + product.size + '</span>)' : '';
                 html += '</h6><h6 class="m-0 total-price">£' + ((parseFloat(product.price) * product.quantity)
                         .toFixed(2)) +
                     '</h6><p class="product-price d-none">' + product.price + '</p></div>';
-                html += '<div class="mb-2"><h6 class="m-0">Toppings</h6>';
-                {{--  $.each(product.topping_names, function(i, topping) {
-                                html += '<p class="small m-0">' + topping + '</p>';
-                            });  --}}
+                
+                // Add delivery status and address
+                html += '<div class="delivery-info mb-2">';
+                html += '<p class="small m-0 text-' + (product.delivery_status == '2' ? 'info' : 'success') + '">';
+                html += product.delivery_status == '2' ? 'Home Delivery' : 'Store Pickup';
+                html += '</p>';
+                if (product.delivery_status == '2' && product.delivery_address) {
+                    html += '<p class="small m-0">Delivery to: ' + product.delivery_address + '</p>';
+                }
+                html += '</div>';
 
-                {{--  $.each(product.toppings_by_category, function(category, toppings) {
-                                html += '<h6 class="mt-2 mb-1">' + category + '</h6>'; // Display category name
-                                $.each(toppings, function(i, topping) {
-                                    html += '<p class="small m-0">' + topping + '</p>'; // Display each topping under the category
-                                });
-                            });  --}}
-                $.each(product.toppingsName_by_categoryName, function(index, category) {
-                    html += '<h6 class="mt-2 mb-1">' + category.category_name +
-                        '</h6>'; // Display category name
-                    $.each(category.topping_names, function(i, topping) {
-                        html += '<p class="small m-0">' + topping +
-                            '</p>'; // Display each topping under the category
+                html += '<div class="mb-2"><h6 class="m-0">Toppings</h6>';
+                if (product.toppingsName_by_categoryName) {
+                    $.each(product.toppingsName_by_categoryName, function(index, category) {
+                        html += '<div class="mb-2">';
+                        html += '<p class="category-name mb-1 fw-bold pb-1 text-black">' + category.category_name + '</p>';
+                        $.each(category.topping_names, function(i, topping) {
+                            html += '<p class="small m-0">' + topping + '</p>';
+                        });
+                        html += '</div>';
                     });
-                });
+                }
 
                 html += '</div><div class="cart-btn">';
                 html += '<button class="btn decrement-btn p-0" data-product-id="' + product.product_id + ',' +
                     product.variant_id +
                     '">-</button>';
-                html += '<input type="number" value="' + product.quantity +
-                    '" class="increment-input cart_input text-center" data-product-id="' + product.product_id +
-                    '">';
+                html += '<input type="number" name="quantity" value="' + product.quantity +
+                    '" class="increment-input cart-input cart_input text-center">';
                 html += '<button class="btn increment-btn p-0" data-product-id="' + product.product_id + ',' +
                     product.variant_id +
                     '">+</button>';
+                html += '<p id="' + product.product_id + '" class="d-none sibling-p"></p>';
                 html += '</div></div></div>';
             });
 
@@ -1506,23 +1526,6 @@
         });
     </script>
 
-   <script>
-function toggleDelivery(productId, branchId) {
-    const pickupRadio = document.getElementById(`pickupStatus${productId}_${branchId}`);
-    const homeRadio = document.getElementById(`homeStatus${productId}_${branchId}`);
-    const pickupSection = document.getElementById(`storePickupSection${productId}_${branchId}`);
-    const deliveryField = document.getElementById(`deliveryAddressField${productId}_${branchId}`);
-
-    if (homeRadio.checked) {
-        pickupSection.style.display = 'none';
-        deliveryField.style.display = 'block';
-    } else if (pickupRadio.checked) {
-        pickupSection.style.display = 'block';
-        deliveryField.style.display = 'none';
-        deliveryField.querySelector('input').value = '';
-    }
-}
-</script>
 
 
 

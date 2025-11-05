@@ -171,7 +171,7 @@
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header p-3">
-                                <button data-bs-toggle="modal" data-bs-target="#locationModal"
+                                <button data-bs-toggle="modal" 
                                     class="text-start locattion-button-show-btn rounded rounded-3 time-modal-button btn px-3 py-2 col-12">
                                     <div class="d-flex justify-content-between col-12">
                                         <div>
@@ -181,8 +181,13 @@
                                                     @foreach ($branchess as $index => $branch)
                                                         @if ($branch->status == 1)
                                                             <span class="ri-map-pin-line me-2"></span>
-                                                            Pickup:<span
-                                                                class="branch-pickup">{{ $branch->location }}</span>
+                                                            Pickup:<p class="small fw-bold m-0 sel-location mt-0" id="storePickupSection{{ $branch->id }}">
+                                                                <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($branch->location) }}" 
+                                                                target="_blank" 
+                                                                style="text-decoration: none; color: inherit;">
+                                                                    {{ $branch->location }}
+                                                                </a>
+                                                            </p>
                                                         @endif
                                                     @endforeach
                                                 </span>
