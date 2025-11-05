@@ -194,7 +194,6 @@ Route::get('get-our-gallery', [HomeController::class, 'getOurGallery'])->name('g
 Route::get('get-new-sea-moss', [HomeController::class, 'getNewSeaMoss'])->name('get-new-sea-moss');
 // Serach route
 Route::get('/search', [HomeController::class, 'search'])->name('product.search');
-Route::get('/search-product', [HomeController::class, 'searchProduct'])->name('search.product');
 
 //cart routes
 Route::get('my-cart', [CartController::class, 'myCart'])->name('my-cart');
