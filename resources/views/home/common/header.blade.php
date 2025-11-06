@@ -151,58 +151,86 @@
                       <h5 class="m-0">Your Cart (<span class="cart-counter-1"></span>)</h5>
                   </div>
                   <div class="cards-parent scrollable">
-                      @forelse (session('cart', []) as $item)
-                          <div id="{{ $item['product_id'] }}carted"
-                              class="carting-child px-3 mt-3 d-flex justify-content-between pb-3 border-bottom">
-                              <img src="{{ asset($item['image']) }}" alt="">
-                              <div class='content'>
-                                  <div class="d-flex cart-input-parent justify-content-between">
-                                      <h6 class="m-0">{{ $item['name'] }} <span style="font-size:12px">{{ $item['size'] ? '(' . $item['size'] . ')' : '' }}</span></h6>
-                                      <h6 class="m-0 total-price">
-                                          £{{ floatval($item['price']) * intval($item['quantity']) }}</h6>
-                                      <p class="product-price d-none">{{ floatval($item['price']) }}</p>
-                                  </div>
+                    @forelse (session('cart', []) as $item)
+                        <div id="{{ $item['product_id'] }}carted"
+                            class="carting-child px-3 mt-3 d-flex justify-content-between pb-3 border-bottom">
+                            <img src="{{ asset($item['image']) }}" alt="">
+                            <div class='content'>
+                                <div class="d-flex cart-input-parent justify-content-between">
+                                    <h6 class="m-0">
+                                        {{ $item['name'] }}
+                                        <span style="font-size:12px">
+                                            {{ !empty($item['size']) ? '(' . $item['size'] . ')' : '' }}
+                                        </span>
+                                    </h6>
+                                    <h6 class="m-0 total-price">
+                                        £{{ number_format(floatval($item['price']) * intval($item['quantity']), 2) }}
+                                    </h6>
+                                    <p class="product-price d-none">{{ floatval($item['price']) }}</p>
+                                </div>
 
-                                  @if ($item['toppings_by_category'])
-                                            <h6>Toppings</h6>
-                                            @foreach ($item['toppings_by_category'] as $categoryId => $toppingIds)
-                                                @php
-                                                    $categories = App\Models\Category::where('id' ,$categoryId)->get();
-                                                    @endphp
-                                                    @foreach ($categories as $category )
-                                                    @if ($category)
-                                                <div class='mb-2'>
-                                                    <p class="category-name  mb-1 fw-bold pb-1 text-black">{{ $category->name }}</p>
-                                                    @foreach ($toppingIds as $toppingId)
-                                                        @php
-                                                            $topping = App\Models\Topping::find($toppingId);
-                                                        @endphp
-                                                        @if ($topping)
-                                                            <p class="small m-0">
-                                                                {{ $topping->name }}
-                                                            </p>
-                                                        @endif
-                                                    @endforeach
-                                                </div>
-                                                    @endif
+                                {{-- Location / Delivery Info --}}
+                                @if(isset($item['delivery_status']))
+                                    <div class="delivery-info mb-2">
+                                        <p class="small m-0 text-{{ $item['delivery_status'] == 2 ? 'info' : 'success' }}">
+                                            {{ $item['delivery_status'] == 2 ? 'Home Delivery' : 'Store Pickup' }}
+                                        </p>
 
-                                                    @endforeach
-                                            @endforeach
+                                        {{-- Store Pickup --}}
+                                        @if($item['delivery_status'] == 1 && !empty($item['location']))
+                                            {{-- <p class="small m-0">
+                                                Pickup from: 
+                                                <strong>{{ $item['location'] }}</strong>
+                                            </p> --}}
                                         @endif
-                                  <div class="cart-btn">
-                                      <button class="btn p-0 decrement-btn"
-                                          data-product-id="{{ $item['product_id'] }}, {{ $item['variant_id'] ?? null }}">-</button>
-                                      <input type="number" name="quantity" value="{{ $item['quantity'] }}"
-                                          class="increment-input cart-input cart_input text-center">
-                                      <button class="btn p-0 increment-btn"
-                                          data-product-id="{{ $item['product_id'] }}, {{ $item['variant_id'] ?? null }}">+</button>
-                                      <p id="{{ $item['product_id'] }}" class="d-none sibling-p"></p>
-                                  </div>
-                              </div>
-                          </div>
-                      @empty
-                          <p class="text-danger text-center">Your cart is empty!</p>
-                      @endforelse
+
+                                        {{-- Home Delivery --}}
+                                        @if($item['delivery_status'] == 2 && !empty($item['delivery_address']))
+                                            {{-- <p class="small m-0">
+                                                Deliver to: 
+                                                <strong>{{ $item['delivery_address'] }}</strong>
+                                            </p> --}}
+                                        @endif
+                                    </div>
+                                @endif
+
+                                {{-- Toppings --}}
+                                @if (!empty($item['toppings_by_category']))
+                                    <h6 class="mb-1">Toppings</h6>
+                                    @foreach ($item['toppings_by_category'] as $categoryId => $toppingIds)
+                                        @php
+                                            $category = App\Models\Category::find($categoryId);
+                                        @endphp
+                                        @if ($category)
+                                            <div class='mb-2'>
+                                                <p class="category-name mb-1 fw-bold text-black">{{ $category->name }}</p>
+                                                @foreach ($toppingIds as $toppingId)
+                                                    @php
+                                                        $topping = App\Models\Topping::find($toppingId);
+                                                    @endphp
+                                                    @if ($topping)
+                                                        <p class="small m-0">{{ $topping->name }}</p>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
+
+                                <div class="cart-btn">
+                                    <button class="btn p-0 decrement-btn"
+                                        data-product-id="{{ $item['product_id'] }}, {{ $item['variant_id'] ?? null }}">-</button>
+                                    <input type="number" name="quantity" value="{{ $item['quantity'] }}"
+                                        class="increment-input cart-input cart_input text-center">
+                                    <button class="btn p-0 increment-btn"
+                                        data-product-id="{{ $item['product_id'] }}, {{ $item['variant_id'] ?? null }}">+</button>
+                                    <p id="{{ $item['product_id'] }}" class="d-none sibling-p"></p>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-danger text-center">Your cart is empty!</p>
+                    @endforelse
                   </div>
                   <div class="pt-3 border-top mt-1 text-center">
                       @if (count(session('cart', [])) > 0)
