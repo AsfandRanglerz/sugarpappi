@@ -80,11 +80,10 @@ class CartController extends Controller
                     "quantity" => (int)$request->quantity,
                     "delivery_status" => $request->delivery_status,
                     "delivery_address" => $request->delivery_address,
-                    'location' => $request->location ?? '', // ✅ store pickup/home delivery info
+                    'location' => $request->location ?? '', // store pickup/home delivery info
                     "toppings_by_category" => [], // Initialize toppings by category
                     'delivery_status' => $request->delivery_status ?? session('delivery_status', 1),
                     'delivery_address' => $request->delivery_address ?? session('delivery_address', ''),
-                    'location' => $request->location,
                     'toppingsName_by_categoryName' => $toppingsNameByCategory ?? [],
                 ];
                 session()->put('cart', $cart);
