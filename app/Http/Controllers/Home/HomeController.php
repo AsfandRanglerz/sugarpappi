@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Models\Faq;
 use App\Models\Menu;
 use App\Models\Branch;
 use App\Models\Gallery;
@@ -12,9 +13,9 @@ use App\Models\TimeSlot;
 use App\Rules\ReCaptcha;
 use App\Mail\ContactMail;
 use App\Models\MenuGallery;
-use App\Models\Faq;
 use Illuminate\Http\Request;
 use App\Models\UserTimeSlotes;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -93,6 +94,7 @@ class HomeController extends Controller
         $data = Seamoss::first();
         return view('home.new-sea-moss', compact('data'));
     }
+
     public function search(Request $request)
     {
         $branches = Branch::all();
@@ -100,18 +102,37 @@ class HomeController extends Controller
         $userId = Auth::guard('user')->id();
         $searchTerm = $request->input('search');
         $userTimeSlots = UserTimeSlotes::where('user_id', $userId)->first();
-        $products = Menu::with([
-            'products' => function ($query) use ($searchTerm) {
-                $query->where('name', 'like', "%$searchTerm%");
-            }
-        ])
-            ->orWhereHas('products', function ($query) use ($searchTerm) {
-                $query->where('name', 'like', "%$searchTerm%");
-            })
+
+        // Filtered products matching the search term
+        $filteredProducts = Product::with(['variants', 'category.getCategory'])
+            ->where('status', 1)
+            ->where('name', 'like', "%{$searchTerm}%")
             ->get();
 
-        return view('home.our-menu', compact('products', 'branches', 'timeSlots', 'searchTerm', 'userTimeSlots'));
+        // Get menu categories (for consistent layout)
+        $menuCategories = Menu::with(['products' => function ($query) {
+            $query->where('status', 1);
+        }])->orderBy('id', 'asc')->get();
+
+        // Eager load products with variants for better performance
+        foreach ($menuCategories as $menu) {
+            $menu->product = $menu->products->load('variants');
+        }
+
+        // Menu galleries for top display
+        $menuGalleries = MenuGallery::orderBy('id', 'DESC')->take(4)->get();
+
+        return view('home.our-menu', compact(
+            'filteredProducts',
+            'branches',
+            'timeSlots',
+            'userTimeSlots',
+            'menuCategories',
+            'menuGalleries',
+            'searchTerm'
+        ));
     }
+
 
     public function sendMail(Request $request)
     {
@@ -120,11 +141,11 @@ class HomeController extends Controller
             'email' => 'required|email',
             'subject' => 'required',
             'message' => 'required',
-            'g-recaptcha-response' => 'required',
+            // 'g-recaptcha-response' => 'required',
         ]);
         // return $request;
         $data = $request->all();
-        Mail::to('aznutritionnj@gmail.com')->send(new ContactMail($data));
+        Mail::to('contact@sugarpappi.com')->send(new ContactMail($data));
         return redirect()->back()->with(['status' => true, 'message' => 'Your message has been sent Successfully! We will get back to you soon.']);
     }
 }

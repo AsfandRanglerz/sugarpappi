@@ -18,6 +18,7 @@ class CartController extends Controller
     public function myCart()
     {
         $carts = session('cart');
+        // return $carts;
         $branchess = Branch::all();
         $userId = Auth::guard('user')->id();
         $userTimeSlots = UserTimeSlotes::where('user_id', $userId)
@@ -62,6 +63,7 @@ class CartController extends Controller
             }
 
             $cartKey = $request->product_id . '-' . ($request->variant_id ?? '');
+            $cart = session()->get('cart', []);
 
             if (isset($cart[$cartKey])) {
                 $cart[$cartKey]['quantity'] += $request->quantity;
@@ -80,8 +82,12 @@ class CartController extends Controller
                     "delivery_address" => $request->delivery_address,
                     'location' => $request->location ?? '', // ✅ store pickup/home delivery info
                     "toppings_by_category" => [], // Initialize toppings by category
+                    'delivery_status' => $request->delivery_status ?? session('delivery_status', 1),
+                    'delivery_address' => $request->delivery_address ?? session('delivery_address', ''),
+                    'location' => $request->location ?? session('selected_branch_name', ''),
+                    'toppingsName_by_categoryName' => $toppingsNameByCategory ?? [],
                 ];
-
+                session()->put('cart', $cart);
                 // Loop through each category and add toppings
                 foreach ($toppingsByCategory as $toppingCategory) {
                     $categoryId = $toppingCategory['category_id'];

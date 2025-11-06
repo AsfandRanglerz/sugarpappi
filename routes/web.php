@@ -95,6 +95,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::resource('terms', TermConditionController::class);
     Route::resource('faq', FaqController::class);
     Route::get('/featured/{id}', [ProductController::class, 'toggleFeatured'])->name('admin.featured');
+Route::post('/update-branch-status', [CartController::class, 'updateBranchStatus'])->name('update.branch.status');
 
     //Time Slots
     Route::get('time-slots', [TimeController::class, 'index'])->name('time-slot.index');

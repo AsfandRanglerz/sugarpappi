@@ -63,7 +63,7 @@ class AuthController extends Controller
             $data['username'] = $user->name;
             $data['useremail'] = $user->email;
             $data['password'] = $request->password;
-            // Mail::to($user->email)->send(new UserConfirmRegistration($data));
+            Mail::to($user->email)->send(new UserConfirmRegistration($data));
             return redirect('/login')->with(['status' => true, 'message' => 'Register Succssfully']);
         } else {
             return redirect()->back()->with(['status' => true,  'message' => 'Something Went Wrong,Try Again!']);
