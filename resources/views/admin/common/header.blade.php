@@ -29,7 +29,7 @@
                 </div>
                 <a href="{{ Auth::guard('admin')->check() ? url('admin/profile') : url('branch/profile') }}"
                     class="dropdown-item has-icon">
-                    <i class="far fa-user"></i> Profile
+                    <i class="fa fa-cog"></i> Settings
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="{{ Auth::guard('admin')->check() ? url('admin/logout') : url('branch/logout') }}"

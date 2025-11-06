@@ -16,6 +16,7 @@
                                     <label for="email">Email</label>
                                     <input id="email" type="email" class="form-control" name="email" tabindex="1"
                                         required autofocus name="email">
+                                    <span class="fa fa-eye-slash position-absolute" style="top: 15.96rem; right:2.1rem" id="togglePassword"></span>
                                     @error('email')
                                         <span class="text-danger">Email required</span>
                                     @enderror
@@ -76,4 +77,21 @@
             toastr.success('{{ \Illuminate\Support\Facades\Session::get('message') }}');
         </script>
     @endif
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function (e) {
+            const password = document.getElementById('password');
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+            this.classList.toggle('fa-eye');
+        });
+        document.querySelector('.btn-login').addEventListener('click', function () {
+        const eyeIcon = document.getElementById('togglePassword');
+
+        if (eyeIcon) {
+            eyeIcon.classList.add('d-none'); // Hide the eye icon when login is clicked
+        }
+    });
+    </script>
 @endsection

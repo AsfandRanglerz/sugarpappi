@@ -290,7 +290,7 @@
                                                                         <div class="mt-1 text-muted" style="font-size: 13px;">
                                                                             <span class="ri-store-2-line"></span>
                                                                             <strong>Pickup:</strong>
-                                                                            {{ $item->branch->location ?? 'N/A' }}
+                                                                            <p>{{ $item->branch->location ?? 'N/A' }}</p>
                                                                         </div>
                                                                     @endif
 
@@ -299,7 +299,7 @@
                                                                         <div class="mt-1 text-muted" style="font-size: 13px;">
                                                                             <span class="ri-home-line"></span>
                                                                             <strong>Home Delivery:</strong>
-                                                                            {{ $item->delivery_address }}
+                                                                            <p>{{ $item->delivery_address }}</p>
                                                                         </div>
                                                                     @endif
                                                                 {{-- Toppings  --}}

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Menu;
 use App\Models\User;
-use App\Models\admin;
+use App\Models\Admin;
 use App\Models\Order;
 use App\Models\Branch;
 use Illuminate\Support\Str;
@@ -66,7 +66,7 @@ class AdminController extends Controller
                 'token'=>$token,
             ]);
 
-            $data['url'] = url('change_password',$token);
+            $data['url'] = url('admin/change_password',$token);
             Mail::to($request->email)->send(new ResetPasswordMail($data));
             return back()->with(['status' => true, 'message' => 'Reset Password Link Send Successfully']);
         }

@@ -56,9 +56,9 @@ Admin routes
 Route::get('/admin-login', [AuthController::class, 'getLoginPage'])->name('admin-login');
 Route::post('admin/login', [AuthController::class, 'Login']);
 Route::get('/admin-forgot-password', [AdminController::class, 'forgetPassword']);
-Route::post('/admin-reset-password-link', [AdminController::class, 'adminResetPasswordLink']);
-Route::get('/change_password/{id}', [AdminController::class, 'change_password']);
-Route::post('/admin-reset-password', [AdminController::class, 'ResetPassword']);
+Route::post('/admin-reset-password-link', [AdminController::class, 'adminResetPasswordLink'])->name('admin-reset-password-link');
+Route::get('admin/change_password/{id}', [AdminController::class, 'change_password'])->name('admin-change-password');
+Route::post('/admin-reset-password', [AdminController::class, 'ResetPassword'])->name('admin-reset-password');
 
 Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('dashboard', [AdminController::class, 'getdashboard']);

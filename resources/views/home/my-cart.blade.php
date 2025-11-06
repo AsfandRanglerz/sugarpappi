@@ -496,9 +496,9 @@
                                         @if(isset($item['delivery_status']))
                                             <p class="mb-1 fw-bold">
                                                 @if($item['delivery_status'] == 1)
-                                                    Delivery Type: Store Pickup
+                                                    
                                                 @elseif($item['delivery_status'] == 2)
-                                                    Delivery Type: Home Delivery
+                                                    
                                                 @else
                                                     Delivery Type: Not Specified
                                                 @endif
@@ -512,7 +512,7 @@
                                                 @endphp
                                                 @if($branch)
                                                     <p class="small text-muted mb-2">
-                                                        <strong>Pickup Location:</strong> {{ $branch->location }}
+                                                        <strong>Pickup:</strong> {{ $branch->location }}
                                                     </p>
                                                 @endif
                                             @endif
@@ -520,7 +520,7 @@
                                         {{-- ✅ Delivery Address (only if Home Delivery) --}}
                                         @if(isset($item['delivery_status']) && $item['delivery_status'] == 2 && !empty($item['delivery_address']))
                                             <p class="small text-muted mb-2">
-                                                <strong>Address:</strong> {{ $item['delivery_address'] }}
+                                                <strong>Home Delivery:</strong> {{ $item['delivery_address'] }}
                                             </p>
                                         @endif
 
