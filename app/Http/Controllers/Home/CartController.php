@@ -84,7 +84,7 @@ class CartController extends Controller
                     "toppings_by_category" => [], // Initialize toppings by category
                     'delivery_status' => $request->delivery_status ?? session('delivery_status', 1),
                     'delivery_address' => $request->delivery_address ?? session('delivery_address', ''),
-                    'location' => $request->location ?? session('selected_branch_name', ''),
+                    'location' => $request->location,
                     'toppingsName_by_categoryName' => $toppingsNameByCategory ?? [],
                 ];
                 session()->put('cart', $cart);

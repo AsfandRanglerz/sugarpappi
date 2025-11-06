@@ -178,18 +178,18 @@
 
                                         {{-- Store Pickup --}}
                                         @if($item['delivery_status'] == 1 && !empty($item['location']))
-                                            <p class="small m-0">
+                                            {{-- <p class="small m-0">
                                                 Pickup from: 
                                                 <strong>{{ $item['location'] }}</strong>
-                                            </p>
+                                            </p> --}}
                                         @endif
 
                                         {{-- Home Delivery --}}
                                         @if($item['delivery_status'] == 2 && !empty($item['delivery_address']))
-                                            <p class="small m-0">
+                                            {{-- <p class="small m-0">
                                                 Deliver to: 
                                                 <strong>{{ $item['delivery_address'] }}</strong>
-                                            </p>
+                                            </p> --}}
                                         @endif
                                     </div>
                                 @endif
