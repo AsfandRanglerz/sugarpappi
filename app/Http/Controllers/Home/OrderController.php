@@ -347,6 +347,9 @@ class OrderController extends Controller
                 $orderItem->quantity = $details['quantity'];
                 $orderItem->tip = is_array($tip_amount) ? array_sum($tip_amount) : ($tip_amount ?: 0);
                 $orderItem->sub_total = floatval($details['price']) * floatval($details['quantity']);
+                $orderItem->delivery_status = $details['delivery_status'] ?? null;
+                $orderItem->delivery_address = $details['delivery_address'] ?? null;
+
                 $orderItem->save();
 
                 if (isset($details['toppings_by_category'])) {
@@ -368,6 +371,7 @@ class OrderController extends Controller
             }
 
             $order->total_amount = $total + ($tip_amount ?: 0) + $tax;
+            // ✅ Extract delivery info from session cart
             $order->save();
 
             // ✅ Loyalty points logic

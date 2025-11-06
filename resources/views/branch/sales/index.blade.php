@@ -43,7 +43,7 @@
                                         </div>
                                         <div>
                                             <h4>
-                                                $ {{ $data['totalDailyAmount'] }}
+                                                £ {{ $data['totalDailyAmount'] }}
                                             </h4>
                                         </div>
                                     </div>

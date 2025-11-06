@@ -471,50 +471,88 @@
                             @endphp
                             <h6>You Order Items (<span class='order-items'>{{ $quantity }}</span>)</h6>
                             <!-- The First Card -->
-                            @forelse (session('cart', []) as $item)
-                                {{--  @dd($item);  --}}
+                           @forelse (session('cart', []) as $item)
                                 <div class="cart_card mb-3 d-flex border-bottom py-4">
                                     <!-- Img Part -->
                                     <div>
                                         <img src="{{ $item['image'] }}" alt>
-
                                     </div>
+
                                     <!-- Description -->
                                     <div class="ms-3 w-100 order-card parent-element">
-                                        <div class="d-flex  justify-content-between">
-                                            <h5 class="m-0">{{ $item['name'] }} <span style="font-size:12px">{{ $item['size'] ? '(' . $item['size'] . ')' : '' }}</h5>
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="m-0">
+                                                {{ $item['name'] }}
+                                                <span style="font-size:12px">
+                                                    {{ $item['size'] ? '(' . $item['size'] . ')' : '' }}
+                                                </span>
+                                            </h5>
                                             <p class="mb-0 price">£{{ $item['price'] }}</p>
                                         </div>
-                                        <p class="mb-1">Variation:Regular</h6>
-                                            @if ($item['toppings_by_category'])
+
+                                        <p class="mb-1">Variation: Regular</p>
+
+                                        {{-- ✅ Delivery Type --}}
+                                        @if(isset($item['delivery_status']))
+                                            <p class="mb-1 fw-bold">
+                                                @if($item['delivery_status'] == 1)
+                                                    Delivery Type: Store Pickup
+                                                @elseif($item['delivery_status'] == 2)
+                                                    Delivery Type: Home Delivery
+                                                @else
+                                                    Delivery Type: Not Specified
+                                                @endif
+                                            </p>
+                                        @endif
+
+                                        {{-- ✅ Store Pickup Location --}}
+                                            @if(isset($item['delivery_status']) && $item['delivery_status'] == 1 && isset($item['branch_id']))
+                                                @php
+                                                    $branch = Branch::find($item['branch_id']);
+                                                @endphp
+                                                @if($branch)
+                                                    <p class="small text-muted mb-2">
+                                                        <strong>Pickup Location:</strong> {{ $branch->location }}
+                                                    </p>
+                                                @endif
+                                            @endif
+
+                                        {{-- ✅ Delivery Address (only if Home Delivery) --}}
+                                        @if(isset($item['delivery_status']) && $item['delivery_status'] == 2 && !empty($item['delivery_address']))
+                                            <p class="small text-muted mb-2">
+                                                <strong>Address:</strong> {{ $item['delivery_address'] }}
+                                            </p>
+                                        @endif
+
+                                        {{-- ✅ Toppings Section --}}
+                                        @if ($item['toppings_by_category'])
                                             <h6>Your Toppings</h6>
                                             @foreach ($item['toppings_by_category'] as $categoryId => $toppingIds)
                                                 @php
-                                                    $categories = Category::where('id' ,$categoryId)->get();
-                                                    @endphp
-                                                    @foreach ($categories as $category )
+                                                    $categories = Category::where('id', $categoryId)->get();
+                                                @endphp
+                                                @foreach ($categories as $category)
                                                     @if ($category)
-                                                <div class='mb-2'>
-                                                    <p class="category-name mb-1 fw-bold text-black">{{ $category->name }}</p>
-                                                    @foreach ($toppingIds as $toppingId)
-                                                        @php
-                                                            $topping = Topping::find($toppingId);
-                                                        @endphp
-                                                        @if ($topping)
-                                                            <p class="small m-0">
-                                                                {{ $topping->name }}
-                                                                <span class='topping_price-1'>
-                                                                    (£{{ number_format($topping->price, 2) }})
-                                                                </span>
-                                                            </p>
-
-                                                        @endif
-                                                    @endforeach
-                                                </div>
+                                                        <div class='mb-2'>
+                                                            <p class="category-name mb-1 fw-bold text-black">{{ $category->name }}</p>
+                                                            @foreach ($toppingIds as $toppingId)
+                                                                @php
+                                                                    $topping = Topping::find($toppingId);
+                                                                @endphp
+                                                                @if ($topping)
+                                                                    <p class="small m-0">
+                                                                        {{ $topping->name }}
+                                                                        <span class='topping_price-1'>(£{{ number_format($topping->price, 2) }})</span>
+                                                                    </p>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
                                                     @endif
-                                                    @endforeach
+                                                @endforeach
                                             @endforeach
                                         @endif
+
+                                        {{-- Quantity & Delete --}}
                                         <div class="d-flex justify-content-between">
                                             <div class="item-btn-parent">
                                                 <button class="btn item-btn py-0 px-2 minus-btn"
@@ -522,26 +560,20 @@
                                                 <input type="number" name="quantity"
                                                     value="{{ $item['quantity'] }}"
                                                     class="cart_input count-input increment-input text-center">
-                                                <button class="btn item-btn  py-0 px-2 plus-btn"
+                                                <button class="btn item-btn py-0 px-2 plus-btn"
                                                     data-product-id="{{ $item['product_id'] }} , {{ $item['variant_id'] ?? null }}">+</button>
-                                                <p class="d-none">{{ $item['product_id'] }}</p>
                                             </div>
-                                            {{--  <span class="ri-delete-bin-7-fill del-btn text-danger p-0"
-                                                style="font-size: 20px; cursor: pointer;"
-                                                onclick="removeFromCart('{{ $item['product_id'] }}')"></span>  --}}
-                                                <span class="ri-delete-bin-7-fill del-btn text-danger p-0"
+                                            <span class="ri-delete-bin-7-fill del-btn text-danger p-0"
                                                 style="font-size: 20px; cursor: pointer;"
                                                 onclick="removeFromCart('{{ $item['product_id'] }}', '{{ $item['variant_id'] ?? null }}')">
-                                                <!-- Make sure to pass both product_id and variant_id -->
                                             </span>
-                                            <p class="helper-p d-none">{{ $item['product_id'] }}</p>
                                         </div>
                                     </div>
                                 </div>
                             @empty
-                                <!-- Display a message when the cart is empty -->
                                 <p class="text-danger text-center">Your cart is empty.</p>
                             @endforelse
+
                         </div>
                         <div>
                             {{-- <div class>
@@ -557,67 +589,79 @@
                         <div class="row justify-content-end">
                             <div class="col-xl-11">
                                 <!-- Alert And Location Start -->
-                                <div class="border-bottom pb-sm-4 pb-3">
-                                    <div class="d-flex align-content-center justify-content-between">
-                                        <p class="pb-0 text-dark" style="font-weight: bold">HOW TO GET IT</p>
-                                        <a class="btn text-danger py-0" data-bs-toggle="modal"
-                                            data-bs-target="#time-Modal">Edit</a>
-                                    </div>
-                                    <!-- Alert and -->
-                                    {{-- <div class="alert alert-warning pt-3 pb-0" role="alert">
-                                            <div class="d-flex pb-0">
-                                                <span class="ri-alert-line text-warning"></span>
-                                                <p class="pb-0 ms-2"><strong>Tomorrow at 9:30 AM.</strong></p>
-                                            </div>
-                                        </div> --}}
-                                    <div class>
-                                        {{-- <span class="pb-2"><span class="ri-map-pin-line"> </span> Pickup: 2562
-                                                Central
-                                                Park Av</span><br> --}}
-                                        <span class="pb-2">
-                                            @foreach ($branchess as $index => $branch)
-                                                @if ($branch->status == 1)
-                                                    <span class="ri-map-pin-line"></span>
-                                                    Pickup: <span class="branch-pickup">{{ $branch->location }}</span>
-                                                @endif
-                                            @endforeach
-                                            {{-- <span class="ri-map-pin-line"></span> Pickup: --}}
-                                            {{-- @php
-                                                $branches = session('cart', []);
-                                                // $selectedBranch = null;
-                                                foreach ($branches as $branch) {
-                                                    $branchId = $branch['branch_id'];
-                                                    if ($branchId) {
-                                                        $selectedBranch = Branch::find($branchId);
+                               <div class="border-bottom pb-sm-4 pb-3">
+                                        @php
+                                            $cart = session('cart', []);
+                                            $storePickupBranch = null;
+                                            $homeDeliveryAddress = null;
+
+                                            foreach ($cart as $item) {
+                                                if (!empty($item['delivery_status'])) {
+                                                    if ($item['delivery_status'] == '1') {
+                                                        $storePickupBranch = $item['branch_name'] ?? null;
+                                                    } elseif ($item['delivery_status'] == '2') {
+                                                        $homeDeliveryAddress = $item['delivery_address'] ?? null;
                                                     }
                                                 }
-                                            @endphp
-                                            @if ($selectedBranch)
-                                                {{ $selectedBranch->location }}
-                                            @else
-                                                Unknown Branch
-                                            @endif --}}
-                                        </span><br>
-                                        {{-- @if ($userTimeSlots)
-                                            <span class="ri-time-line"></span>
-                                            {{ \Carbon\Carbon::parse($userTimeSlots->date)->format('d M, Y') }} at {{ $userTimeSlots->time }} --}}
-                                        @if ($dateTime = session('time'))
-                                            <span class="ri-time-line"></span>
-                                            {{ \Carbon\Carbon::parse($dateTime['date'])->format('d M, Y') }} at
-                                            {{ $dateTime['time'] }}
-                                        @else
-                                            @foreach ($timeSlots as $timeSlot)
-                                                <span class="selected-time"
-                                                    data-time="{{ $timeSlot->start_pickup_time }}">
-                                                    <span class="ri-time-line"> </span>Today Pickup:
-                                                    {{ $timeSlot->start_pickup_time }}
+                                            }
+
+                                            $hasPickup = !empty($storePickupBranch);
+                                            $hasHomeDelivery = !empty($homeDeliveryAddress);
+                                        @endphp
+
+                                        {{-- Header with conditional Edit button --}}
+                                        <div class="d-flex align-content-center justify-content-between">
+                                            <p class="pb-0 text-dark fw-bold">HOW TO GET IT</p>
+                                            @if ($hasPickup)
+                                                <a class="btn text-danger py-0" data-bs-toggle="modal" data-bs-target="#time-Modal">Edit</a>
+                                            @endif
+                                        </div>
+
+                                        {{-- 🏬 STORE PICKUP SECTION --}}
+                                        @if ($hasPickup)
+                                            <div class="pickup-section">
+                                                @php
+                                                    $branch = \App\Models\Branch::where('name', $storePickupBranch)->first();
+                                                @endphp
+                                                <span class="pb-2 d-block mt-1">
+                                                    <span class="ri-store-2-line"></span>
+                                                    <strong>Pickup:</strong>
+                                                    {{ $storePickupBranch }}
+                                                    @if ($branch && $branch->location)
+                                                        — {{ $branch->location }}
+                                                    @endif
                                                 </span>
-                                            @break
-                                        @endforeach
-                                    @endif
+
+                                                {{-- 🕒 Pickup Time --}}
+                                                @if ($dateTime = session('time'))
+                                                    <span class="ri-time-line mt-1"></span>
+                                                    {{ \Carbon\Carbon::parse($dateTime['date'])->format('d M, Y') }} at
+                                                    {{ $dateTime['time'] }}
+                                                @else
+                                                    @foreach ($timeSlots as $timeSlot)
+                                                        <span class="selected-time d-block mt-1" data-time="{{ $timeSlot->start_pickup_time }}">
+                                                            <span class="ri-time-line"></span>
+                                                            Today Pickup: {{ $timeSlot->start_pickup_time }}
+                                                        </span>
+                                                        @break
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        @endif
+
+                                        {{-- 🚚 HOME DELIVERY SECTION --}}
+                                        @if ($hasHomeDelivery)
+                                            <div class="home-delivery-section mt-3">
+                                                <span class="pb-2 d-block mt-1">
+                                                    <span class="ri-home-line"></span>
+                                                    <strong>Home Delivery:</strong>
+                                                    {{ $homeDeliveryAddress }}
+                                                </span>
+                                            </div>
+                                        @endif
+                                    </div>
 
                                 </div>
-                            </div>
                             <!-- Alert And Location End -->
                             <!-- Tip part-->
                             <div class="mt-sm-4 pb-sm-4 mt-3 pb-3 border-bottom">

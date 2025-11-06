@@ -193,31 +193,67 @@
                             <div class="col-xl-11 mt-0">
                                 <!-- Alert And Location Start -->
                                 <div class="border-bottom pb-3 mt-0">
-                                    <h5 class="mb-3">PICKUP AT</h5>
-                                    <div class>
-                                        <span class="pb-2">
-                                            <span class="pb-2">
-                                                @foreach ($branchess as $index => $branch)
-                                                    @if ($branch->status == 1)
-                                                        <span class="ri-map-pin-line"></span>
-                                                        Pickup:{{ $branch->location }}
+                                            <h5 class="mb-3">PICKUP AT</h5>
+
+                                            @php
+                                                $cart = session('cart', []);
+                                                $storePickupBranch = null;
+                                                $homeDeliveryAddress = null;
+
+                                                foreach ($cart as $item) {
+                                                    if (!empty($item['delivery_status'])) {
+                                                        if ($item['delivery_status'] == '1') {
+                                                            $storePickupBranch = $item['branch_name'] ?? null;
+                                                        } elseif ($item['delivery_status'] == '2') {
+                                                            $homeDeliveryAddress = $item['delivery_address'] ?? null;
+                                                        }
+                                                    }
+                                                }
+
+                                                $hasPickup = !empty($storePickupBranch);
+                                                $hasHomeDelivery = !empty($homeDeliveryAddress);
+                                            @endphp
+
+                                            {{-- 🏬 Store Pickup Section --}}
+                                            @if ($hasPickup)
+                                                @php
+                                                    $branch = \App\Models\Branch::where('name', $storePickupBranch)->first();
+                                                @endphp
+                                                <div class="pb-2">
+                                                    <span class="ri-map-pin-line"></span>
+                                                    <strong>Pickup:</strong>
+                                                    @if ($branch && $branch->location)
+                                                        {{ $branch->location }}
                                                     @endif
-                                                @endforeach
-                                            </span>
-                                            <br>
-                                            @if ($dateTime = session('time'))
-                                                <span class="ri-time-line"></span>
-                                                {{ \Carbon\Carbon::parse($dateTime['date'])->format('d M, Y') }} at
-                                                {{ $dateTime['time'] }}
-                                            @else
-                                                @foreach ($timeSlots as $timeSlot)
-                                                    <span class><span class="ri-time-line"> </span>Today Pickup:
-                                                        {{ $timeSlot->start_pickup_time }}</span>
-                                                @break
-                                            @endforeach
-                                        @endif
-                                </div>
-                                @if (Auth::guard('user')->check())
+                                                </div>
+
+                                                {{-- 🕒 Pickup Time --}}
+                                                @if ($dateTime = session('time'))
+                                                    <div>
+                                                        <span class="ri-time-line"></span>
+                                                        {{ \Carbon\Carbon::parse($dateTime['date'])->format('d M, Y') }} at {{ $dateTime['time'] }}
+                                                    </div>
+                                                @else
+                                                    @foreach ($timeSlots as $timeSlot)
+                                                        <div>
+                                                            <span class="ri-time-line"></span>
+                                                            Today Pickup: {{ $timeSlot->start_pickup_time }}
+                                                        </div>
+                                                        @break
+                                                    @endforeach
+                                                @endif
+                                            @endif
+
+                                            {{-- 🚚 Home Delivery Section --}}
+                                            @if ($hasHomeDelivery)
+                                                <div class="pb-2 mt-2">
+                                                    <span class="ri-home-line"></span>
+                                                    <strong>Home Delivery:</strong> {{ $homeDeliveryAddress }}
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                @if (Auth::guard('user')->check() && $hasPickup)
                                     <h6 class="mt-3">Vehicle Info (Optional)</h6>
                                     <div class="row vehicle-info">
                                         <div class="col-6 px-2">
@@ -241,14 +277,7 @@
                                         $remaining = $reward->rewards - $reward->redeemed;
                                     }
                                 @endphp
-                                @if ($remaining)
-                                    <h6 class="mt-3">Earned Reward: <span
-                                            id="redeemDollar">{{ $remaining }}</span> $
-                                        (Optional)</h6>
-                                    <input type="number" id="addAmount" name="redeemed" class="form-control"
-                                        placeholder="Amount i.e... 50, 60 etc" style="border-radius: 6px">
-                                    <b class="small">(Note: Redeemed your dollars from your earned reward.)</b>
-                                @endif
+                                
                             </div>
                             <!-- Location -->
                             <!-- Blling Start -->

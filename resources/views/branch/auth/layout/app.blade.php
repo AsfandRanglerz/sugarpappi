@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>aznutrition-and-smoothie - @yield('title')</title>
+    <title>Sugar Pappi - @yield('title')</title>
     <!-- Developed By Ranglerz -->
     <link rel="stylesheet"
         href="https://www.ranglerz.com/cost-to-make-a-web-ios-or-android-app-and-how-long-does-it-take.php">
@@ -20,7 +20,7 @@
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="{{ asset('public/admin/assets/css/custom.css') }}">
     <!-- Favicon -->
-    <link href="{{ asset('public/img/az-logo.png') }}" rel="icon">
+    <link href="{{ asset('public/img/logo.png') }}" rel="icon">
     @yield('style')
 </head>
 
