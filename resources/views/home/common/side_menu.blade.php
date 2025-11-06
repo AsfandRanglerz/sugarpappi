@@ -8,10 +8,10 @@
     {{-- <a class="w-100 link" href="{{ route('get-new-sea-moss') }}">NEW! Sea Moss</a>
     <a class="w-100 link" href="https://squareup.com/gift/ML9HY7TG18CE2/order" target="_blank">Gift card</a>
     <a class="w-100 link" href="{{ route('get-our-menu') }}">Order Online</a> --}}
-    <a href="" class="w-100 link">Privacy Policy</a>
-    <a href="" class="w-100 link">Terms & Conditions</a>
-    <a href="" class="w-100 link">Contact Us</a>
-    <a href="" class="w-100 link">FAQ's</a>
+    <a href="{{ route('privacy-policy') }}" class="w-100 link">Privacy Policy</a>
+    <a href="{{ route('terms-conditions') }}" class="w-100 link">Terms & Conditions</a>
+    <a href="{{ route('getcontact') }}" class="w-100 link">Contact Us</a>
+    <a href="{{ route('get-faqs') }}" class="w-100 link">FAQ's</a>
     @if (Auth::guard('user')->check())
         <a href='{{ route('user-logout') }}' class="w-100 link logout" id="">Logout</a>
         <script>
@@ -25,7 +25,7 @@
            })
         </script>
     @else
-        <a href="" class="w-100 link">Login</a>
+        <a href="{{ route('login') }}" class="w-100 link">Login</a>
     @endif
     {{-- <div class="footer">
         <h6 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact Us</h6>
