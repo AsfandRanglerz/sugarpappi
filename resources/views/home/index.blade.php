@@ -365,7 +365,7 @@
                                         <p>£ <span class="prodPrice">{{ $product->price }}</span></p>
                                     @endif
 
-                                    <p class="small">{!! $product->description !!}</p>
+                                    {{-- <p class="small">{!! $product->description !!}</p> --}}
                                     <div class="d-flex cart-btn">
                                         <button class="btn p-0 decrement" type="button">-</button>
                                         <input type="text" class="cart_input increment-input text-center"
@@ -720,7 +720,7 @@
                                     @endif
                                 </p>
                             </div>
-                            <p class="mb-0 text-muted small">{!! $product->description !!}</p>
+                            {{-- <p class="mb-0 text-muted small">{!! $product->description !!}</p> --}}
                         </a>
                     </div>
                 @endforeach
@@ -815,8 +815,7 @@
                                                         @endif
                                                     </p>
                                                 </div>
-                                                <p class="mb-0 text-muted small text-center">{!! $prod->description !!}
-                                                </p>
+                                                {{-- <p class="mb-0 text-muted small text-center">{!! $prod->description !!}</p> --}}
                                             </a>
                                         </div>
                                     @endforeach
@@ -910,7 +909,7 @@
                                                 <p>£ <span class="prodPrice">{{ $prod->price }}</span></p>
                                             @endif
 
-                                            <p class="small">{!! $prod->description !!}</p>
+                                            {{-- <p class="small">{!! $prod->description !!}</p> --}}
                                             <div class="d-flex cart-btn">
                                                 <button class="btn p-0 decrement" type="button">-</button>
                                                 <input type="text" class="cart_input increment-input text-center"
@@ -1358,9 +1357,9 @@
                 html += '<p class="small m-0 text-' + (product.delivery_status == '2' ? 'info' : 'success') + '">';
                 html += product.delivery_status == '2' ? 'Home Delivery' : 'Store Pickup';
                 html += '</p>';
-                if (product.delivery_status == '2' && product.delivery_address) {
-                    html += '<p class="small m-0">Delivery to: ' + product.delivery_address + '</p>';
-                }
+                // if (product.delivery_status == '2' && product.delivery_address) {
+                //     html += '<p class="small m-0">Delivery to: ' + product.delivery_address + '</p>';
+                // }
                 html += '</div>';
 
                 html += '<div class="mb-2"><h6 class="m-0">Toppings</h6>';

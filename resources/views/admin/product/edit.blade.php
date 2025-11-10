@@ -125,7 +125,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-12">
+                                            {{-- <div class="col-sm-12">
                                                 <div class="form-group mb-3">
                                                     <label for="description">Description</label>
                                                     <textarea placeholder="Enter description" name="description"
@@ -135,7 +135,7 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="card-footer text-center row">

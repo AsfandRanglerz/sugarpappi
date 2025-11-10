@@ -23,7 +23,7 @@
                                             <th>image</th>
                                             <th>Price</th>
                                             <th>Sizes</th>
-                                            <th>Description</th>
+                                            {{-- <th>Description</th> --}}
                                             <th>Featured</th>
                                             <th>Status</th>
                                             <th scope="col">Actions</th>
@@ -67,7 +67,7 @@
                                                     <div class="badge badge-danger badge-shadow">No size</div>
                                                     @endif
                                                 </td>
-                                                <td>{!! $product->description !!}</td>
+                                                {{-- <td>{!! $product->description !!}</td> --}}
                                                 <td>
                                                     @if ($product->is_featured)
                                                         <a href="{{ route('admin.featured', ['id' => $product->id]) }}"

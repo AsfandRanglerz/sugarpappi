@@ -49,8 +49,8 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'menu_id' => 'required',
-            'image' => 'required',
-            'description' => 'required',
+            // 'image' => 'required',
+            // 'description' => 'required',
         ]);
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -64,7 +64,7 @@ class ProductController extends Controller
         $data = [
             'menu_id' => $request->menu_id,
             'name' => $request->name,
-            'description' => $request->description,
+            // 'description' => $request->description,
             'image' => $image,
         ];
         if ($request->has('price')) {
@@ -137,7 +137,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'menu_id' => 'required',
-            'description' => 'required',
+            // 'description' => 'required',
         ]);
 
         $product = Product::with('variants')->find($id);
@@ -157,7 +157,7 @@ class ProductController extends Controller
         }
         $product->menu_id = $request->menu_id;
         $product->name = $request->name;
-        $product->description = $request->description;
+        // $product->description = $request->description;
         if ($request->has('price')) {
             $product->price = $request->price;
         }
