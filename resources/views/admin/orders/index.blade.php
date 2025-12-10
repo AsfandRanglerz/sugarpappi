@@ -16,13 +16,13 @@
                         <div class="card-body  table-responsive">
                             <table class="table table-striped table-bordered text-center" id="table_id_events">
                                 <thead>
-                                    <tr>
+                                        <th>Sr.</th>
                                         <th>Order Code</th>
                                         <th>User Name</th>
                                         <th>Product Name</th>
                                         <th>Vehicle Color</th>
                                         <th>Vehicle Number</th>
-                                        <th>Branch No</th>
+                                        {{-- <th>Branch No</th> --}}
                                         <th>Branch Location</th>
                                         <th>Branch Name</th>
                                         <th>Topping</th>
@@ -43,6 +43,7 @@
 
                                     @foreach ($orders as $order)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>#{{ $order->code }}</td>
                                         <th>{{ $order->user->name }}</th>
                                         <td>
@@ -71,7 +72,7 @@
                                             </div>
                                             @endif
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             @php
                                             $branchNumbers = [];
                                             @endphp
@@ -88,7 +89,7 @@
                                             @endphp
                                             @endif
                                             @endforeach
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             @php
                                             $branchLocations = [];
